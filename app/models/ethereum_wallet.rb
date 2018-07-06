@@ -1,0 +1,2 @@
+class EthereumWallet < ApplicationRecord
+end

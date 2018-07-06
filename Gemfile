@@ -15,9 +15,13 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'ethereum.rb'
+gem 'eth'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'rspec-rails'
+  gem "fabrication"
+  gem "ffaker"
 end
 
 group :development do
