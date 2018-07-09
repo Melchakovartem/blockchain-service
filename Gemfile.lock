@@ -225,15 +225,11 @@ DEPENDENCIES
   active_model_serializers
   byebug
   coffee-rails (~> 4.2)
-<<<<<<< HEAD
   database_cleaner
   eth
   ethereum.rb
   fabrication
   ffaker
-=======
-  ethereum.rb
->>>>>>> Change gemfilelock
   jbuilder (~> 2.5)
   jquery-rails
   json_spec
