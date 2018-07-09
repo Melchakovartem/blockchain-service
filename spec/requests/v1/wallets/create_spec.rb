@@ -28,20 +28,20 @@ RSpec.describe "Wallet create" do
 
   context "with taken id" do
     it "returns status :unprocessable_entity" do
-      CreateWalletService.call(user_id)
+      WalletService.create(user_id)
       post v1_wallets_path, params: {  user_id: user_id }
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it "doesn't create new ethereum wallet" do
-      CreateWalletService.call(user_id)
+      WalletService.create(user_id)
       expect do
         post v1_wallets_path, params: {  user_id: user_id }
       end.to_not change(EthereumWallet, :count)
     end
 
     it "returns errors" do
-      CreateWalletService.call(user_id)
+      WalletService.create(user_id)
       post v1_wallets_path, params: {  user_id: user_id }
       expect(response.body).to have_json_path("errors")
     end

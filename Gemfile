@@ -19,13 +19,15 @@ gem 'eth'
 gem 'versionist'
 gem 'responders'
 gem 'active_model_serializers'
+gem "redis"
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
-  gem "fabrication"
-  gem "ffaker"
-  gem "json_spec"
+  gem 'fabrication'
+  gem 'ffaker'
+  gem 'json_spec'
+  gem 'database_cleaner'
 end
 
 group :development do
