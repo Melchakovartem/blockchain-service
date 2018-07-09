@@ -16,12 +16,16 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'ethereum.rb'
 gem 'eth'
+gem 'versionist'
+gem 'responders'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem "fabrication"
   gem "ffaker"
+  gem "json_spec"
 end
 
 group :development do

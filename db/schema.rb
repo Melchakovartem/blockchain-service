@@ -16,8 +16,10 @@ ActiveRecord::Schema.define(version: 20180706145640) do
     t.string   "public_hex"
     t.string   "private_hex"
     t.string   "address"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_ethereum_wallets_on_user_id"
   end
 
 end
