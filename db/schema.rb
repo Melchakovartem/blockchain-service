@@ -10,17 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180706145640) do
+ActiveRecord::Schema.define(version: 20180709155703) do
+
+  create_table "advertisers", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_advertisers_on_profile_id"
+  end
 
   create_table "ethereum_wallets", force: :cascade do |t|
     t.string   "public_hex"
     t.string   "private_hex"
     t.string   "address"
-    t.integer  "user_id"
-    t.string   "user_type",   null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["user_id"], name: "index_ethereum_wallets_on_user_id"
+    t.integer  "userable_id"
+    t.string   "userable_type", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["userable_id"], name: "index_ethereum_wallets_on_userable_id"
+  end
+
+  create_table "owners", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.string   "referrer_address"
+    t.string   "contract_address"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["profile_id"], name: "index_owners_on_profile_id"
   end
 
 end

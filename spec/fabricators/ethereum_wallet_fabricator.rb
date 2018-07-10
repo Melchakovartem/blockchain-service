@@ -1,5 +1,5 @@
 Fabricator(:ethereum_wallet) do
   address { Eth::Key.new.address }
-  user_id { rand(1..100)  }
-  user_type { %w(owner advertiser).sample }
+  userable_id { rand(1..100)  }
+  userable_type { %w(Owner Advertiser).sample }
 end

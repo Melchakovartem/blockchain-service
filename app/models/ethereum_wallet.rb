@@ -1,4 +1,6 @@
 class EthereumWallet < ApplicationRecord
-  validates :user_id, uniqueness: true, numericality: { only_integer: true }
-  validates :user_type, inclusion: { in: %w(owner advertiser), message: "not supported user type"  }
+  validates :userable_id, numericality: { only_integer: true }
+  validates :userable_type, inclusion: { in: %w(Owner Advertiser), message: "not supported user type"  }
+
+  belongs_to :userable, polymorphic: true
 end

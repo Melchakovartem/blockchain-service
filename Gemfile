@@ -24,10 +24,6 @@ gem "redis"
 group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
-  gem 'fabrication'
-  gem 'ffaker'
-  gem 'json_spec'
-  gem 'database_cleaner'
 end
 
 group :development do
@@ -35,6 +31,14 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :test do
+  gem 'fabrication'
+  gem 'ffaker'
+  gem 'json_spec'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
