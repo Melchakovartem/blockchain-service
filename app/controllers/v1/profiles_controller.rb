@@ -18,6 +18,7 @@ class V1::ProfilesController < ApplicationController
 
     def check_model
       type = profile_params[:profile_type]
-      return head :unprocessable_entity if type != "Owner" and type != "Advertiser"
+      allowed_types = ["Owner", "Advertiser"]
+      return head :unprocessable_entity unless allowed_types.include? type
     end
 end
