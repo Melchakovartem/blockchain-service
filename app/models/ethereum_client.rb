@@ -29,4 +29,8 @@ class EthereumClient < Ethereum::HttpClient
   def set_contract(name, address, abi)
     Ethereum::Contract.create(name: name, address: address, abi: abi, client: self)
   end
+
+  def create_contract(file, name, index)
+    Ethereum::Contract.create(file: file, name: name, contract_index: index, client: self)
+  end
 end
