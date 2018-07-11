@@ -32,11 +32,13 @@ ActiveRecord::Schema.define(version: 20180709155703) do
 
   create_table "owners", force: :cascade do |t|
     t.integer  "profile_id"
-    t.string   "referrer_address"
+    t.integer  "referrer_id"
     t.string   "contract_address"
+    t.boolean  "root"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.index ["profile_id"], name: "index_owners_on_profile_id"
+    t.index ["referrer_id"], name: "index_owners_on_referrer_id"
   end
 
 end

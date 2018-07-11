@@ -20,6 +20,8 @@ gem 'versionist'
 gem 'responders'
 gem 'active_model_serializers'
 gem "redis"
+gem 'settingslogic'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'byebug', platform: :mri
