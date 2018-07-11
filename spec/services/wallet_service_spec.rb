@@ -8,13 +8,13 @@ RSpec.describe WalletService do
 
       it "saves owner profile to database" do
         expect do
-          WalletService.create(wallet_params)
+          WalletService.create(profile_id, profile_type)
         end.to change(Owner, :count)
       end
 
       it "saves new etherem wallet to database" do
         expect do
-          WalletService.create(wallet_params)
+          WalletService.create(profile_id, profile_type)
         end.to change(EthereumWallet, :count)
       end
     end
@@ -25,13 +25,13 @@ RSpec.describe WalletService do
 
       it "saves owner profile to database" do
         expect do
-          WalletService.create(wallet_params)
+          WalletService.create(profile_id, profile_type)
         end.to change(Advertiser, :count)
       end
 
       it "saves new etherem wallet to database" do
         expect do
-          WalletService.create(wallet_params)
+          WalletService.create(profile_id, profile_type)
         end.to change(EthereumWallet, :count)
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe WalletService do
       let!(:ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: owner.id, userable_type: "Owner") }
 
       it "updates etherem wallet for owner" do
-        WalletService.update(wallet_params)
+        WalletService.update(profile_id, profile_type)
         expect(ethereum_wallet.address).to_not eq(ethereum_wallet.reload.address)
       end
     end
@@ -57,13 +57,9 @@ RSpec.describe WalletService do
       let!(:ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: advertiser.id, userable_type: "Advertiser") }
 
       it "updates etherem wallet for advertiser" do
-        WalletService.update(wallet_params)
+        WalletService.update(profile_id, profile_type)
         expect(ethereum_wallet.address).to_not eq(ethereum_wallet.reload.address)
       end
     end
-  end
-
-  def wallet_params
-    { profile_id: profile_id, profile_type: profile_type }
   end
 end
