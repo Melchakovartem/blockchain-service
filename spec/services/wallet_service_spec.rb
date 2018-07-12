@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe WalletService do
-  describe "create" do
+  describe "method create" do
     context "root invite" do
       context "create owner profile and wallet" do
         let(:profile_id) { rand(1..10) }
@@ -30,6 +30,7 @@ RSpec.describe WalletService do
         let!(:referrer) { Fabricate(:owner, profile_id: referrer_profile_id, root: true) }
         let!(:referrer_ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: referrer.id, userable_type: "Owner") }
         let(:profile_params) { { root: "false", referrer_profile_id: referrer_profile_id } }
+        let!(:client) { EthereumClient.new(Settings.http_path) }
 
         it "saves owner profile to database" do
           expect do
@@ -41,6 +42,13 @@ RSpec.describe WalletService do
           expect do
             WalletService.create(referral_profile_id, profile_type, profile_params)
           end.to change(EthereumWallet, :count)
+        end
+
+        it "creates referral smart contract" do
+          WalletService.create(referral_profile_id, profile_type, profile_params)
+          referral = Owner.by_profile(referral_profile_id)
+          contract = client.set_contract("ref", referral.reload.contract_address, Settings.referral_abi)
+          expect("0x"+contract.call.referral).to eq(referral.ethereum_wallet.address.downcase)
         end
       end
     end
@@ -63,7 +71,7 @@ RSpec.describe WalletService do
     end
   end
 
-  describe "update" do
+  describe "method update" do
     context "owner profile and wallet" do
       let!(:profile_id) { rand(1..100) }
       let!(:profile_type) { "Owner" }
