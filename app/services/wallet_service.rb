@@ -1,9 +1,12 @@
 class WalletService
   class << self
     def create(profile_id, profile_type, *params)
-      profile = model_create(profile_id, profile_type, *params)
+      profile = model_create(profile_id, profile_type)
       profile.create_ethereum_wallet(private_hex: key.private_hex, public_hex: key.public_hex, 
                             address: key.address)
+      if profile_type == "Owner" and params.first[:root] == "false" 
+        DeployContractService.call(params.first[:referrer_profile_id], profile_id)
+      end
       return profile
     end
 
@@ -19,7 +22,7 @@ class WalletService
         Eth::Key.new
       end
 
-      def model_create(profile_id, profile_type, *params)
+      def model_create(profile_id, profile_type)
         model = profile_type.capitalize.constantize   
         profile = model.create(profile_id: profile_id)
       end

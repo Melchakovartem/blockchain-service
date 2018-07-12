@@ -2,20 +2,46 @@ require "rails_helper"
 
 RSpec.describe WalletService do
   describe "create" do
-    context "owner profile and wallet" do
-      let(:profile_id) { rand(1..100) }
-      let(:profile_type) { "Owner" }
+    context "root invite" do
+      context "create owner profile and wallet" do
+        let(:profile_id) { rand(1..10) }
+        let(:profile_type) { "Owner" }
+        let(:profile_params) { { root: "true" } }
 
-      it "saves owner profile to database" do
-        expect do
-          WalletService.create(profile_id, profile_type)
-        end.to change(Owner, :count)
+        it "saves owner profile to database" do
+          expect do
+            WalletService.create(profile_id, profile_type, profile_params)
+          end.to change(Owner, :count)
+        end
+
+        it "saves new etherem wallet to database" do
+          expect do
+            WalletService.create(profile_id, profile_type, profile_params)
+          end.to change(EthereumWallet, :count)
+        end
       end
+    end
 
-      it "saves new etherem wallet to database" do
-        expect do
-          WalletService.create(profile_id, profile_type)
-        end.to change(EthereumWallet, :count)
+    context "non root invite" do
+      context "create owner profile and wallet" do
+        let!(:referrer_profile_id) { rand(1..10) }
+        let!(:referral_profile_id) { rand(11..20) }
+        let(:profile_type) { "Owner" }
+        let!(:referrer) { Fabricate(:owner, profile_id: referrer_profile_id, root: true) }
+        let!(:referrer_ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: referrer.id, userable_type: "Owner") }
+        let(:profile_params) { { root: "false", referrer_profile_id: referrer_profile_id } }
+
+        it "saves owner profile to database" do
+          expect do
+            WalletService.create(referral_profile_id, profile_type, profile_params)
+          end.to change(Owner, :count)
+        end
+
+        it "saves new etherem wallet to database" do
+          expect do
+            WalletService.create(referral_profile_id, profile_type, profile_params)
+          end.to change(EthereumWallet, :count)
+        end
       end
     end
 
