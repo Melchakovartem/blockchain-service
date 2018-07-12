@@ -85,7 +85,7 @@ RSpec.describe WalletService do
     end
 
     context "advertiser profile and wallet" do
-     let!(:profile_id) { rand(1..100) }
+      let!(:profile_id) { rand(1..100) }
       let!(:profile_type) { "Advertiser" }
       let!(:advertiser) { Fabricate(:advertiser, profile_id: profile_id) }
       let!(:ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: advertiser.id, userable_type: "Advertiser") }
