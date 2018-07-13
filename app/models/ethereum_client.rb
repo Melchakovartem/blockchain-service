@@ -16,17 +16,6 @@ class EthereumClient < Ethereum::HttpClient
   	super(address).to_f / WEI_IN_ETHER
   end
 
-  def send_eth_to(private_hex, to, amount_eth)
-  	begin
-  	  key =Eth::Key.new(priv: private_hex)
-  	  amount = (amount_eth * WEI_IN_ETHER).to_i
-      pp to
-  	  transfer_and_wait(key, to, amount)
-  	rescue
-  	  puts "Transaction failed"
-  	end
-  end
-
   def set_contract(name, address, abi)
     Ethereum::Contract.create(name: name, address: address, abi: abi, client: self)
   end
