@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe "Wallet create" do
   context "Advertiser" do
     let(:profile_id) { rand(1..100) }
+    let!(:client) { EthereumClient.new(Settings.http_path) }
+
     context "with valid id" do
       it "returns status :created" do
         post v1_advertisers_path, params: { profile_id: profile_id }
@@ -23,6 +25,12 @@ RSpec.describe "Wallet create" do
       it "returns address" do
         post v1_advertisers_path, params: { profile_id: profile_id }
         expect(response.body).to have_json_path("address")
+      end
+
+      it "sends ether to new ethereum wallet" do
+        post v1_advertisers_path, params: { profile_id: profile_id }
+        wallet = Advertiser.by_profile(profile_id).ethereum_wallet.address
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
 

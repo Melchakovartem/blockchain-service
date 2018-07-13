@@ -4,7 +4,7 @@ class EthereumClient < Ethereum::HttpClient
 
   DEFAULT_GAS_LIMIT = 3_000_000
 
-  DEFAULT_GAS_PRICE = 1_000_000_000
+  DEFAULT_GAS_PRICE = 100_000_000_000
 
   def initialize(path)
     super(path)
@@ -16,11 +16,28 @@ class EthereumClient < Ethereum::HttpClient
   	super(address).to_f / WEI_IN_ETHER
   end
 
-  def send_eth_to(from, to, amount_eth)
+  def transfer(key, address, amount)
+    Eth.configure { |c| c.chain_id = net_version["result"].to_i }
+    args = { 
+      from: key.address,
+      to: address,
+      value: amount,
+      data: "",
+      nonce: get_nonce(key.address),
+      gas_limit: gas_limit,
+      gas_price: gas_price
+    }
+    tx = Eth::Tx.new(args)
+    tx.sign key
+    eth_send_raw_transaction(tx.hex)["result"]
+  end
+
+  def send_eth_to(private_hex, to, amount_eth)
   	begin
-  	  key =Eth::Key.new(priv: from.private_hex)
+  	  key =Eth::Key.new(priv: private_hex)
   	  amount = (amount_eth * WEI_IN_ETHER).to_i
-  	  transfer(key, to, amount)
+      pp to
+  	  transfer_and_wait(key, to, amount)
   	rescue
   	  puts "Transaction failed"
   	end

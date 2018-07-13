@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe WalletService do
+  let!(:client) { EthereumClient.new(Settings.http_path) }
+
   describe "method create" do
     context "root invite" do
       context "create owner profile and wallet" do
@@ -18,6 +20,13 @@ RSpec.describe WalletService do
           expect do
             WalletService.create(profile_id, profile_type, profile_params)
           end.to change(EthereumWallet, :count)
+        end
+
+        it "sends ether to new ethereum wallet" do
+          WalletService.create(profile_id, profile_type, profile_params)
+          client = EthereumClient.new(Settings.http_path)
+          wallet = Owner.by_profile(profile_id).ethereum_wallet.address
+          expect(client.get_balance(wallet)).to eq(0.01)
         end
       end
     end
@@ -50,6 +59,13 @@ RSpec.describe WalletService do
           contract = client.set_contract("ref", referral.reload.contract_address, Settings.referral_abi)
           expect("0x"+contract.call.referral).to eq(referral.ethereum_wallet.address.downcase)
         end
+
+        it "sends ether to new ethereum wallet" do
+          WalletService.create(referral_profile_id, profile_type, profile_params)
+          client = EthereumClient.new(Settings.http_path)
+          wallet = Owner.by_profile(referral_profile_id).ethereum_wallet.address
+          expect(client.get_balance(wallet)).to eq(0.01)
+        end
       end
     end
 
@@ -67,6 +83,13 @@ RSpec.describe WalletService do
         expect do
           WalletService.create(profile_id, profile_type)
         end.to change(EthereumWallet, :count)
+      end
+
+      it "sends ether to new ethereum wallet" do
+        WalletService.create(profile_id, profile_type)
+        client = EthereumClient.new(Settings.http_path)
+        wallet = Advertiser.by_profile(profile_id).ethereum_wallet.address
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
   end

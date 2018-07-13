@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "Wallet create" do
   context "Root invite" do
     let(:profile_id) { rand(1..100) }
+    let!(:client) { EthereumClient.new(Settings.http_path) }
 
     context "with valid id" do
       it "returns status :created" do
@@ -29,6 +30,12 @@ RSpec.describe "Wallet create" do
       it "doesn't create referral contract" do
         post v1_owners_path, params: { profile_id: profile_id, profile_params: { root: true } }
         expect(Owner.by_profile(profile_id).contract_address).to be_nil
+      end
+
+      it "sends ether to new ethereum wallet" do
+        post v1_owners_path, params: { profile_id: profile_id, profile_params: { root: true } }
+        wallet = Owner.by_profile(profile_id).ethereum_wallet.address
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
 
@@ -89,6 +96,12 @@ RSpec.describe "Wallet create" do
         referral = Owner.by_profile(referral_profile_id)
         contract = client.set_contract("ref", referral.reload.contract_address, Settings.referral_abi)
         expect("0x"+contract.call.referral).to eq(referral.ethereum_wallet.address.downcase)
+      end
+
+      it "sends ether to new ethereum wallet" do
+        post v1_owners_path, params: { profile_id: referral_profile_id, profile_params: { root: false, referrer_profile_id: referrer_profile_id } }
+        wallet = Owner.by_profile(referral_profile_id).ethereum_wallet.address
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
 
