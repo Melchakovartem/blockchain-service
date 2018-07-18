@@ -22,6 +22,7 @@ gem 'active_model_serializers'
 gem "redis"
 gem 'settingslogic'
 gem 'sidekiq'
+gem 'web3-eth'
 
 group :development, :test do
   gem 'byebug', platform: :mri

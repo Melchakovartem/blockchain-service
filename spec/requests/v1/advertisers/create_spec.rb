@@ -30,7 +30,7 @@ RSpec.describe "Wallet create" do
       it "sends ether to new ethereum wallet" do
         post v1_advertisers_path, params: { profile_id: profile_id }
         wallet = Advertiser.by_profile(profile_id).ethereum_wallet.address
-        expect(client.get_balance(wallet)).to eq(0.01)
+        expect(client.get_balance(wallet)).to eq(0.009953824)
       end
     end
 
