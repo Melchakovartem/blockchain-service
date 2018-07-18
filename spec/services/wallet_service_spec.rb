@@ -26,7 +26,7 @@ RSpec.describe WalletService do
           WalletService.create(profile_id, profile_type, profile_params)
           client = EthereumClient.new(Settings.http_path)
           wallet = Owner.by_profile(profile_id).ethereum_wallet.address
-          expect(client.get_balance(wallet)).to eq(0.009953824)
+          expect(client.get_balance(wallet)).to be > 0.009
         end
       end
     end
@@ -64,7 +64,7 @@ RSpec.describe WalletService do
           WalletService.create(referral_profile_id, profile_type, profile_params)
           client = EthereumClient.new(Settings.http_path)
           wallet = Owner.by_profile(referral_profile_id).ethereum_wallet.address
-          expect(client.get_balance(wallet)).to eq(0.009953824)
+          expect(client.get_balance(wallet)).to be > 0.009
         end
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe WalletService do
         WalletService.create(profile_id, profile_type)
         client = EthereumClient.new(Settings.http_path)
         wallet = Advertiser.by_profile(profile_id).ethereum_wallet.address
-        expect(client.get_balance(wallet)).to eq(0.009953824)
+        expect(client.get_balance(wallet)).to be > 0.009
       end
     end
   end
