@@ -2,7 +2,7 @@ class EthereumClient < Ethereum::HttpClient
 
   WEI_IN_ETHER = 10**18
 
-  DEFAULT_GAS_LIMIT = 800_000
+  DEFAULT_GAS_LIMIT = 3_800_000
 
   DEFAULT_GAS_PRICE = 1_000_000_000
 

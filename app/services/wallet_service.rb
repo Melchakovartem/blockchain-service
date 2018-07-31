@@ -70,7 +70,7 @@ class WalletService
           to: Settings.token_address, 
           value: 0, 
           data: data, 
-          chainId: chain_id 
+          chainId: chain_id
           }
       end
   end
