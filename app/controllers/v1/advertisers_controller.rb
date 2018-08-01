@@ -10,6 +10,12 @@ class V1::AdvertisersController < ApplicationController
   	respond_with WalletService.update(params[:profile_id], "Advertiser")
   end
 
+  def show
+    profile = Advertiser.by_profile(params[:profile_id])
+    respond_with profile, serializer: V1::AdvertiserSerializer,
+                 location: v1_advertiser_path
+  end
+
   private
 
     def profile_params

@@ -1,7 +1,7 @@
 class V1::ProfileSerializer < ActiveModel::Serializer
   attributes :id, :profile_id, :profile_type, :address
 
-  delegate :address, :profile_type, to: :wallet
+  delegate :address, to: :wallet
 
   def wallet
   	object.ethereum_wallet

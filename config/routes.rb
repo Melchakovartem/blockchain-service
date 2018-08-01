@@ -16,5 +16,8 @@ Rails.application.routes.draw do
       get :get_balance
       get :get_allowance
   	end
+
+    resources :owners, only: :show, param: :profile_id
+    resources :advertisers, only: :show, param: :profile_id
   end
 end
