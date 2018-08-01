@@ -35,14 +35,7 @@ RSpec.describe "Wallet create" do
       it "sends ether to new ethereum wallet" do
         post v1_owners_path, params: { profile_id: profile_id, profile_params: { root: true } }
         wallet = Owner.by_profile(profile_id).ethereum_wallet.address
-        expect(client.get_balance(wallet)).to be > 0.009
-      end
-
-      it "approvs tokens for ethereum wallet" do
-        post v1_owners_path, params: { profile_id: profile_id, profile_params: { root: true } }
-        wallet = Owner.by_profile(profile_id).ethereum_wallet.address
-        contract = client.set_contract("Wetoken", Settings.token_address, Settings.token_abi)
-        expect(contract.call.allowance(wallet, Settings.owner)).to eq(10**25)
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
 
@@ -108,14 +101,7 @@ RSpec.describe "Wallet create" do
       it "sends ether to new ethereum wallet" do
         post v1_owners_path, params: { profile_id: referral_profile_id, profile_params: { root: false, referrer_profile_id: referrer_profile_id } }
         wallet = Owner.by_profile(referral_profile_id).ethereum_wallet.address
-        expect(client.get_balance(wallet)).to be > 0.009
-      end
-
-      it "approvs tokens for ethereum wallet" do
-        post v1_owners_path, params: { profile_id: referral_profile_id, profile_params: { root: false, referrer_profile_id: referrer_profile_id } }
-        wallet = Owner.by_profile(referral_profile_id).ethereum_wallet.address
-        contract = client.set_contract("Wetoken", Settings.token_address, Settings.token_abi)
-        expect(contract.call.allowance(wallet, Settings.owner)).to eq(10**25)
+        expect(client.get_balance(wallet)).to eq(0.01)
       end
     end
 
