@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   		post :create_wallet
   		patch :update_wallet
       get :get_balance
+      post :get_tokens
   	end
   	resource :owners do
   		post :create_wallet
   		patch :update_wallet
       get :get_balance
+      post :get_tokens
   	end
   end
 end

@@ -20,7 +20,7 @@ class TokenService
 
   def get_tokens(amount)
     address = @profile.ethereum_wallet.address
-    @contract.transact.transfer(address, amount)
+    @contract.transact.transfer(address, amount.to_i)
   end
 
   def get_balance
