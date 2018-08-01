@@ -33,6 +33,8 @@ class TokenService
     @contract.call.allowance(address, spender)
   end
 
+  private
+
       def perform_data(name_method, spender, amount)
         hex =  Digest::SHA3.new(256).digest(name_method)
         method_id = hex.unpack('H*')[0][0..7]
