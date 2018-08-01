@@ -3,7 +3,7 @@ class TokenService
   def initialize(profile_id, profile_type)
     @client = EthereumClient.new(Settings.http_path)
     model = profile_type.capitalize.constantize
-    @profile = model.find_by_profile_id(profile_id)
+    @profile = model.find_by_profile_id!(profile_id)
     @contract = @client.set_contract(Settings.token_name, Settings.token_address, Settings.token_abi)   
   end
     

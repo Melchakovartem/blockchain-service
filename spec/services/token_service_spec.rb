@@ -1,14 +1,11 @@
 require "rails_helper"
 
 RSpec.describe WalletService do
-  let!(:client) { EthereumClient.new(Settings.http_path) }
-  let!(:token) { client.set_contract(Settings.token_name, Settings.token_address, Settings.token_abi) }
-
   describe "Advertiser" do
     let(:profile_id) { rand(1..10) }
     let(:profile_type) { "Advertiser" }
     let!(:spender) { Eth::Key.new.address }
-    let(:amount) { rand(100.1000) }
+    let(:amount) { rand(100..1000) }
     
     before do 
       WalletService.create(profile_id, profile_type)
@@ -35,7 +32,7 @@ RSpec.describe WalletService do
     let(:profile_id) { rand(1..10) }
     let(:profile_type) { "Owner" }
     let!(:spender) { Eth::Key.new.address }
-    let(:amount) { rand(100.1000) }
+    let(:amount) { rand(100..1000) }
     let(:profile_params) { { root: true } }
     
     before do 

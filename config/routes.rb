@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   	resource :advertisers do
   		post :create_wallet
   		patch :update_wallet
+      get :get_balance
   	end
   	resource :owners do
   		post :create_wallet
   		patch :update_wallet
+      get :get_balance
   	end
   end
 end
