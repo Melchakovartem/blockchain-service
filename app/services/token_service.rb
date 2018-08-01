@@ -2,20 +2,11 @@ class TokenService
 
   def initialize(profile_id, profile_type)
     @client = EthereumClient.new(Settings.http_path)
+
     model = profile_type.capitalize.constantize
+
     @profile = model.find_by_profile_id!(profile_id)
     @contract = @client.set_contract(Settings.token_name, Settings.token_address, Settings.token_abi)   
-  end
-    
-  def approve(spender, amount)
-    private_hex = @profile.ethereum_wallet.private_hex
-    key = Eth::Key.new(priv: private_hex)
-    spender = spender[2..42]
-    data = perform_data('approve(address,uint256)', spender, amount)
-    args = perform_args(key, data)    
-    tx = Eth::Tx.new(args)
-    tx.sign key
-    @client.eth_send_raw_transaction(tx.hex)["result"]
   end
 
   def get_tokens(amount)
@@ -32,6 +23,20 @@ class TokenService
     address = @profile.ethereum_wallet.address
     @contract.call.allowance(address, spender)
   end
+    
+  def approve(spender, amount)
+    private_hex = @profile.ethereum_wallet.private_hex
+    key = Eth::Key.new(priv: private_hex)
+
+    data = perform_data('approve(address,uint256)', spender[2..42], amount)
+
+    args = perform_args(key, data) 
+
+    tx = Eth::Tx.new(args)
+    tx.sign key
+
+    @client.eth_send_raw_transaction(tx.hex)["result"]
+  end
 
   private
 
@@ -45,6 +50,7 @@ class TokenService
 
       def perform_args(key, data)
         chain_id = @client.net_version["result"].to_i
+
         args = { 
           nonce: @client.get_nonce(key.address), 
           gas_price: @client.gas_price, 

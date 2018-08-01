@@ -3,9 +3,12 @@ class WalletService
     TOKEN_FOR_APPROVE = 10**25
 
     def create(profile_id, profile_type, *params)
-      @client = EthereumClient.new(Settings.http_path) 
+      @client = EthereumClient.new(Settings.http_path)
+
       @profile = create_model_and_wallet(profile_id, profile_type)
+      
       send_ether
+
       if profile_type == "Owner"
         if params.first[:root] == "false" 
           DeployContractService.call(params.first[:referrer_profile_id], profile_id)
@@ -14,6 +17,7 @@ class WalletService
           @profile.update(root: :true)
         end
       end
+
       return @profile
     end
 
