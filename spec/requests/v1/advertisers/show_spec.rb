@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Show advertiser" do
+RSpec.describe "Show advertiser profile" do
   context "exist profile" do
     let(:profile_id) { rand(1..100) }
     let(:profile_type) { "Advertiser" }

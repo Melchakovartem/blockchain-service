@@ -12,7 +12,7 @@ class DeployContractService
       referral = Owner.by_profile(referrer_profile_id)
       referrer_address = referrer.root ? referrer.ethereum_wallet.address : referrer.contract_address
       @contract.deploy_and_wait(Settings.http_token_address, referral.ethereum_wallet.address, referrer_address)
-      referral.update(referrer_id: referrer.id, contract_address: @contract.address)
+      referral.update(referrer_id: referrer.id, contract_address: @contract.address, root: false)
     end
 
 
