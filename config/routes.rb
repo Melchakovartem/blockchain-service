@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post :approve_tokens
   		patch :update_wallet
       get :get_balance
+      get :get_allowance
   	end
   	resource :owners do
   		post :create_wallet
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
       post :approve_tokens
   		patch :update_wallet
       get :get_balance
+      get :get_allowance
   	end
   end
 end

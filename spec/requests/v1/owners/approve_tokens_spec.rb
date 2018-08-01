@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Get tokens to wallet" do
+RSpec.describe "Approve tokens for wallet" do
   let(:profile_id) { rand(1..10) }
   let(:profile_type) { "Owner" }
   let(:amount) { rand(100..1000) }

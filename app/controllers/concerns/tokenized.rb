@@ -16,4 +16,8 @@ module Tokenized
   def approve_tokens
   	token_service.approve(params[:spender], params[:token_amount])
   end
+
+  def get_allowance
+  	respond_with token_service.get_allowance(params[:spender])
+  end
 end
