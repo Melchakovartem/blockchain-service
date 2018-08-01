@@ -8,7 +8,7 @@ RSpec.describe "Wallet update" do
 
     context "with exist profile id" do
       before do
-        patch v1_advertisers_path, params: { profile_id: profile_id }
+        patch update_wallet_v1_advertisers_path, params: { profile_id: profile_id }
       end
 
       it "returns status :no_content" do
@@ -27,7 +27,7 @@ RSpec.describe "Wallet update" do
 
 
       before do
-        patch v1_advertisers_path, params: { profile_id: rand(101..200) }
+        patch update_wallet_v1_advertisers_path, params: { profile_id: rand(101..200) }
       end
 
       it "returns status :no_content" do
