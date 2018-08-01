@@ -1,5 +1,5 @@
 class V1::OwnersController < ApplicationController
-  before_action :token_service, except: [:create_wallet, :update_wallet]
+  include Tokenized
 
   def create_wallet
   	respond_with WalletService.create(params[:profile_id], "Owner", profile_params), serializer: V1::ProfileSerializer, 
@@ -8,14 +8,6 @@ class V1::OwnersController < ApplicationController
 
   def update_wallet
   	respond_with WalletService.update(params[:profile_id], "Owner")
-  end
-
-  def get_balance
-    respond_with token_service.get_balance
-  end
-
-  def get_tokens
-    token_service.get_tokens(params[:token_amount])
   end
 
   private
