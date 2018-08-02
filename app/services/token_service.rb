@@ -6,7 +6,8 @@ class TokenService
     model = profile_type.capitalize.constantize
 
     @profile = model.find_by_profile_id!(profile_id)
-    @contract = @client.set_contract(Settings.token_name, Settings.token_address, Settings.token_abi)   
+    @wetoken = Contract.find_by_name("wetoken")
+    @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi)   
   end
 
   def get_tokens(amount)
@@ -55,7 +56,7 @@ class TokenService
           nonce: @client.get_nonce(key.address), 
           gas_price: @client.gas_price, 
           gas_limit: @client.gas_limit,  
-          to: Settings.token_address, 
+          to: @wetoken.address, 
           value: 0, 
           data: data, 
           chainId: chain_id

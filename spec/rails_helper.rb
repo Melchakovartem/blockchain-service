@@ -50,31 +50,6 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-  config.before(:suite) do
-    DatabaseCleaner[:active_record].strategy = :transaction
-    DatabaseCleaner[:active_record].clean_with(:truncation)
-
-    DatabaseCleaner[:ohm].clean_with(:truncation)
-  end
-
-  config.before(:all) do
-    DatabaseCleaner.start
-  end
-
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
-  end
-
-  config.after(:all) do
-    DatabaseCleaner.clean
-
-    if Rails.env.test?
-      FileUtils.rm_rf(Rails.root.join("public", "test", "uploads"))
-      FileUtils.rm_rf(Rails.root.join("tmp", "uploads"))
-    end
-  end
 end
 
 Shoulda::Matchers.configure do |config|

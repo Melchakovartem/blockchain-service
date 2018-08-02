@@ -16,7 +16,8 @@ class V1::FullProfileSerializer < ActiveModel::Serializer
   end
 
   def token_balance
-  	token = client.set_contract(Settings.token_name, Settings.token_address, Settings.token_abi)
+    wetoken = Contract.find_by_name("wetoken")
+  	token = client.set_contract(wetoken.name, wetoken.address, wetoken.abi)
   	token.call.balance_of(address)
   end
 end

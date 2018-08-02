@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709155703) do
+ActiveRecord::Schema.define(version: 20180802084606) do
 
   create_table "advertisers", force: :cascade do |t|
     t.integer  "profile_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["profile_id"], name: "index_advertisers_on_profile_id"
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.string   "name"
+    t.string   "address"
+    t.text     "abi"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ethereum_wallets", force: :cascade do |t|

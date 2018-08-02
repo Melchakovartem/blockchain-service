@@ -13,8 +13,9 @@ class DeployContractService
       referral = Owner.by_profile(referrer_profile_id)
 
       referrer_address = referrer.root ? referrer.ethereum_wallet.address : referrer.contract_address
+      wetoken = Contract.find_by_name("wetoken")
 
-      @contract.deploy_and_wait(Settings.http_token_address, referral.ethereum_wallet.address, referrer_address)
+      @contract.deploy_and_wait(wetoken.address, referral.ethereum_wallet.address, referrer_address)
       referral.update(referrer_id: referrer.id, contract_address: @contract.address, root: false)
     end
 
@@ -23,7 +24,7 @@ class DeployContractService
       client = EthereumClient.new(Settings.http_path)
       
       @contract = client.create_contract("config/contracts/referral.sol", "ReferralContract", 1)
-      @contract.sender = Settings.http_sender
+      @contract.sender = Settings.owner
     end
   end
 end
