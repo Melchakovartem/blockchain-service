@@ -12,9 +12,9 @@ class WalletService
       if profile_type == "Owner"
         if params.first[:root] == "false" 
           DeployContractService.call(params.first[:referrer_profile_id], profile_id)
-          @profile.update(root: :false)
+          @profile.update(root: "false")
         else
-          @profile.update(root: :true)
+          @profile.update(root: "true")
         end
       end
 

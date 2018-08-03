@@ -6,14 +6,12 @@ RSpec.describe WalletService do
     let(:profile_type) { "Advertiser" }
     let!(:spender) { Eth::Key.new.address }
     let(:amount) { rand(100..1000) }
-    
-    before do 
-      WalletService.create(profile_id, profile_type)
-    end
+    let(:advertiser) {  WalletService.create(profile_id, profile_type) }
+    let(:priv_key) { advertiser.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
 
     context "method approve" do
       it 'approves tokens' do
-        token_service = TokenService.new(profile_id, profile_type)
         token_service.approve(spender, amount)
         expect(token_service.get_allowance(spender)).to eq(amount)
       end
@@ -21,7 +19,6 @@ RSpec.describe WalletService do
 
     context "method get_tokens" do
       it 'gets tokens' do
-        token_service = TokenService.new(profile_id, profile_type)
         token_service.get_tokens(amount)
         expect(token_service.get_balance).to eq(amount)
       end
@@ -34,14 +31,12 @@ RSpec.describe WalletService do
     let!(:spender) { Eth::Key.new.address }
     let(:amount) { rand(100..1000) }
     let(:profile_params) { { root: true } }
-    
-    before do 
-      WalletService.create(profile_id, profile_type, profile_params)
-    end
+    let(:owner) {  WalletService.create(profile_id, profile_type, profile_params) }
+    let(:priv_key) { owner.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
 
     context "method approve" do
       it 'approves tokens' do
-        token_service = TokenService.new(profile_id, profile_type)
         token_service.approve(spender, amount)
         expect(token_service.get_allowance(spender)).to eq(amount)
       end
@@ -49,7 +44,6 @@ RSpec.describe WalletService do
 
     context "method get_tokens" do
       it 'gets tokens' do
-        token_service = TokenService.new(profile_id, profile_type)
         token_service.get_tokens(amount)
         expect(token_service.get_balance).to eq(amount)
       end

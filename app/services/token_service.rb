@@ -1,33 +1,27 @@
 class TokenService
 
-  def initialize(profile_id, profile_type)
+  def initialize(priv_key)
     @client = EthereumClient.new(Settings.http_path)
-
-    model = profile_type.capitalize.constantize
-
-    @profile = model.find_by_profile_id!(profile_id)
+    @private_key = priv_key
+    @address = Eth::Key.new(priv: @private_key).address
     @wetoken = Contract.find_by_name("wetoken")
     @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi)   
   end
 
   def get_tokens(amount)
-    address = @profile.ethereum_wallet.address
-    @contract.transact.transfer(address, amount.to_i)
+    @contract.transact.transfer(@address, amount.to_i)
   end
 
   def get_balance
-    address = @profile.ethereum_wallet.address
-    @contract.call.balance_of(address)
+    @contract.call.balance_of(@address)
   end
 
   def get_allowance(spender)
-    address = @profile.ethereum_wallet.address
-    @contract.call.allowance(address, spender)
+    @contract.call.allowance(@address, spender)
   end
     
   def approve(spender, amount)
-    private_hex = @profile.ethereum_wallet.private_hex
-    key = Eth::Key.new(priv: private_hex)
+    key = Eth::Key.new(priv: @private_key)
 
     data = perform_data('approve(address,uint256)', spender[2..42], amount)
 

@@ -8,9 +8,12 @@ RSpec.describe "Get allowance" do
   let(:profile_params) { { root: true } }
 
   context "profile exist" do
+    let!(:owner) { WalletService.create(profile_id, profile_type, profile_params) }
+    let(:priv_key) { owner.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
+
     before do 
-      WalletService.create(profile_id, profile_type, profile_params)
-      TokenService.new(profile_id, profile_type).approve(spender, amount)
+      token_service.approve(spender, amount)
       get get_allowance_v1_owners_path, params: { profile_id: profile_id, spender: spender }
     end
 

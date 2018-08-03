@@ -7,9 +7,12 @@ RSpec.describe "Get allowance" do
   let(:amount) { rand(100..1000) }
 
   context "profile exist" do
+    let!(:advertiser) { WalletService.create(profile_id, profile_type) }
+    let(:priv_key) { advertiser.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
+
     before do 
-      WalletService.create(profile_id, profile_type)
-      TokenService.new(profile_id, profile_type).approve(spender, amount)
+     token_service.approve(spender, amount)
       get get_allowance_v1_advertisers_path, params: { profile_id: profile_id, spender: spender }
     end
 

@@ -2,6 +2,7 @@ class PrepareService
   class << self
     def call
       client = EthereumClient.new(Settings.http_path)
+      Contract.destroy_all
 
       wetoken =  client.create_contract("config/contracts/wetoken.sol", "wetoken", 7)
       wetoken.deploy_and_wait(Settings.owner)

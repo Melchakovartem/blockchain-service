@@ -5,16 +5,20 @@ RSpec.describe "Approve tokens for wallet" do
   let(:profile_type) { "Advertiser" }
   let(:amount) { rand(100..1000) }
   let!(:spender) { Eth::Key.new.address }
+  
 
   context "profile exist" do
+    let!(:advertiser) { WalletService.create(profile_id, profile_type) }
+    let(:priv_key) { advertiser.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
+    
     before do 
-      WalletService.create(profile_id, profile_type)
       post approve_tokens_v1_advertisers_path, params: { profile_id: profile_id, token_amount: amount, 
                                                          spender: spender }
     end
 
     it "recieves tokens to wallet" do
-      allowance = TokenService.new(profile_id, profile_type).get_allowance(spender)
+      allowance = token_service.get_allowance(spender)
       expect(allowance).to eq(amount)
     end 
 

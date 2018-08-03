@@ -7,9 +7,12 @@ RSpec.describe "Get balance of wallet" do
   let(:amount) { rand(100..1000) }
 
   context "profile exist" do
+    let!(:advertiser) { WalletService.create(profile_id, profile_type) }
+    let(:priv_key) { advertiser.ethereum_wallet.private_hex }
+    let(:token_service) { TokenService.new(priv_key) }
+
     before do 
-      WalletService.create(profile_id, profile_type)
-      TokenService.new(profile_id, profile_type).get_tokens(amount)
+      token_service.get_tokens(amount)
       get get_balance_v1_advertisers_path, params: { profile_id: profile_id }
     end
 

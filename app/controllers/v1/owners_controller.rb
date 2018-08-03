@@ -23,6 +23,7 @@ class V1::OwnersController < ApplicationController
   	end
 
     def token_service
-      TokenService.new(params[:profile_id], "Owner")
+      priv_key = Owner.find_by_profile_id!(params[:profile_id]).ethereum_wallet.private_hex
+      TokenService.new(priv_key)
     end
 end

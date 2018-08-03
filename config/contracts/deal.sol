@@ -86,7 +86,7 @@ contract Deal {
     }
 
     function createCampaign(bytes32 id, uint value, address campaignCreator) returns (uint) {
-       //require(getAddressCreatorById(id) != address(0));
+       require(getAddressCreatorById(id) == address(0));
        token.transferFrom(campaignCreator, this, value);
        campaigns[id] = Campaign(campaignCreator, value, value, Status.created);
        CreateCampaign(id);
@@ -103,8 +103,10 @@ contract Deal {
     }
 
     function destroyCampaign(bytes32 id) onlyOwner returns (bool success) {
+        require(campaigns[id].currentBalance == campaigns[id].tokenAmount);
         token.transfer(campaigns[id].creator, campaigns[id].tokenAmount);
         campaigns[id].status = Status.destroyed;
+        campaigns[id].tokenAmount = 0;
         campaigns[id].currentBalance = 0;
     }
 
