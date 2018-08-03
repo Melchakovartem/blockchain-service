@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   		post :create_wallet
       post :get_tokens
       post :approve_tokens
+      post :create_campaign
   		patch :update_wallet
       get :get_balance
       get :get_allowance

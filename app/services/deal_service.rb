@@ -16,6 +16,7 @@ class DealService
     status = @deal.call.check_status(id)
     address = @deal.call.get_address_creator_by_id(id)
     return "not created" if address == "0"*40
+
     case status
     when 0
       "created"
@@ -24,6 +25,7 @@ class DealService
     when 2
       "finished"
     end
+
   end
 
   def get_creator(id)
@@ -51,18 +53,14 @@ class DealService
   end
 
   def send_coins(token_amount_hash, campaign_id)
-    router_owner_ids = []
-    token_amounts = []
-    token_amount_hash.each do |key, value|
-      router_owner_ids << key
-      token_amounts << value.to_i
-    end
-    owner_addresses = []
-    router_owner_ids.each do |id|
+    router_owner_ids = token_amount_hash.keys
+    token_amounts = token_amount_hash.values.map{|amount| amount.to_i }
+
+    owner_addresses = router_owner_ids.map do |id|
       owner = Owner.by_profile(id)
-      address = owner.root ? owner.ethereum_wallet.address : owner.contract_address
-      owner_addresses << address
+      owner.root ? owner.ethereum_wallet.address : owner.contract_address
     end
+
     @deal.transact.send_coin(owner_addresses, token_amounts, campaign_id)
   end
 end

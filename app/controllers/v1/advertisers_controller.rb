@@ -16,6 +16,11 @@ class V1::AdvertisersController < ApplicationController
                  location: v1_advertiser_path
   end
 
+  def create_campaign
+    advertiser = Advertiser.find_by_profile_id!(params[:profile_id])
+    DealService.new.create_campaign(advertiser, params[:campaign_id], params[:token_amount])
+  end
+
   private
 
     def profile_params
