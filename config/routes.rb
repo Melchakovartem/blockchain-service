@@ -18,10 +18,12 @@ Rails.application.routes.draw do
       get :get_allowance
   	end
 
-    resources :owners, only: :show, param: :profile_id
-    resources :advertisers, only: :show, param: :profile_id
-    resources :campaigns, param: :campaign_id do
+    resources :campaigns do
       patch :finish
     end
+
+    resources :owners, only: :show, param: :profile_id
+    resources :advertisers, only: :show, param: :profile_id
+    #resources :campaigns, param: :campaign_id
   end
 end

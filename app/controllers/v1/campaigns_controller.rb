@@ -19,13 +19,17 @@ class V1::CampaignsController < ApplicationController
     deal_service.destroy
   end
 
+  def finish
+    deal_service.finish
+  end
+
   private
     def advertiser
       Advertiser.find_by_profile_id!(params[:profile_id])
     end
 
     def deal_service
-      DealService.new(params[:campaign_id])
+      DealService.new(params[:id] || params[:campaign_id])
     end
 
     def check_exist_campaign
