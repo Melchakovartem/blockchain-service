@@ -3,7 +3,6 @@ require "rails_helper"
 RSpec.describe "Show allowance" do
   let(:profile_id) { rand(1..10) }
   let(:profile_type) { "Owner" }
-  let!(:spender) { Eth::Key.new.address }
   let(:amount) { rand(100..1000) }
   let(:profile_params) { { root: true } }
 
