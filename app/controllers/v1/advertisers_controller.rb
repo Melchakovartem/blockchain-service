@@ -19,10 +19,6 @@ class V1::AdvertisersController < ApplicationController
 
   private
 
-    def profile_params
-      params.require(:profile_params).permit(:root, :referrer_profile_id)
-    end
-
     def advertiser
       Advertiser.find_by_profile_id!(params[:profile_id])
     end
