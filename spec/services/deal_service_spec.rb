@@ -8,7 +8,7 @@ RSpec.describe DealService do
     priv_key = @advertiser.ethereum_wallet.private_hex
     @token_service = TokenService.new(priv_key)
     @token_amount = rand(20000..100000)
-    @deal_service = DealService.new
+    @campaign_id = FFaker::Lorem.word
     @deal = Contract.find_by_name("deal")
     @token_service.get_tokens(10**10)
     @token_service.approve(@deal.address, 10**25)
@@ -16,24 +16,24 @@ RSpec.describe DealService do
 
   describe "Creates campaign" do
     before(:all) do
-      @campaign_id = FFaker::Lorem.word 
-      @deal_service.create_campaign(@advertiser, @campaign_id, @token_amount) 
+      @deal_service = DealService.new(@campaign_id)
+      @deal_service.create_campaign(@advertiser, @token_amount) 
     end
 
     it "checks status" do
-      expect(@deal_service.check_status(@campaign_id)).to eq("created")
+      expect(@deal_service.check_status).to eq("created")
     end
 
     it "checks creator campaign" do
-      expect(@deal_service.get_creator(@campaign_id)).to eq(@advertiser.ethereum_wallet.address[2..42].downcase)
+      expect(@deal_service.get_creator).to eq(@advertiser.ethereum_wallet.address[2..42].downcase)
     end
 
     it "checks token amount" do
-      expect(@deal_service.get_token_amount(@campaign_id)).to eq(@token_amount)
+      expect(@deal_service.get_token_amount).to eq(@token_amount)
     end
 
     it "checks current balance of campaign" do
-      expect(@deal_service.get_current_balance(@campaign_id)).to eq(@token_amount)
+      expect(@deal_service.get_current_balance).to eq(@token_amount)
     end
   end
 
@@ -41,16 +41,17 @@ RSpec.describe DealService do
     before(:all) do
       @added_token_amount = rand(100..1000)
       @campaign_id = FFaker::Lorem.word 
-      @deal_service.create_campaign(@advertiser, @campaign_id, @token_amount) 
-      @deal_service.add_tokens(@campaign_id, @added_token_amount)
+      @deal_service = DealService.new(@campaign_id)
+      @deal_service.create_campaign(@advertiser, @token_amount) 
+      @deal_service.add_tokens(@added_token_amount)
     end
 
     it "checks token amount" do
-      expect(@deal_service.get_token_amount(@campaign_id)).to eq(@token_amount + @added_token_amount)
+      expect(@deal_service.get_token_amount).to eq(@token_amount + @added_token_amount)
     end
 
     it "checks current balance of campaign" do
-      expect(@deal_service.get_current_balance(@campaign_id)).to eq(@token_amount + @added_token_amount)
+      expect(@deal_service.get_current_balance).to eq(@token_amount + @added_token_amount)
     end
   end
 
@@ -58,20 +59,21 @@ RSpec.describe DealService do
   describe "Destroy campaign" do
     before(:all) do
       @campaign_id = FFaker::Lorem.word
-      @deal_service.create_campaign(@advertiser, @campaign_id, @token_amount)
-      @deal_service.destroy(@campaign_id)
+      @deal_service = DealService.new(@campaign_id)
+      @deal_service.create_campaign(@advertiser, @token_amount)
+      @deal_service.destroy
     end
 
     it "checks token amount" do
-      expect(@deal_service.get_token_amount(@campaign_id)).to be_zero
+      expect(@deal_service.get_token_amount).to be_zero
     end
 
     it "checks current balance of campaign" do
-      expect(@deal_service.get_current_balance(@campaign_id)).to be_zero
+      expect(@deal_service.get_current_balance).to be_zero
     end
 
     it "checks status" do
-      expect(@deal_service.check_status(@campaign_id)).to eq("destroyed")
+      expect(@deal_service.check_status).to eq("destroyed")
     end
   end
 
@@ -88,10 +90,10 @@ RSpec.describe DealService do
       @referral_profile_params = { root: "false", referrer_profile_id: @root_owner_profile_id }
       @referral_owner = WalletService.create(@referral_owner_profile_id, @owner_profile_type, @referral_profile_params)
 
-      
-      @deal_service.create_campaign(@advertiser, @campaign_id, @token_amount)
+      @deal_service = DealService.new(@campaign_id)
+      @deal_service.create_campaign(@advertiser, @token_amount)
       @token_amount_hash = {"#{@root_owner_profile_id}"  => "10000", "#{@referral_owner_profile_id}" => "10000"}
-      @deal_service.send_coins(@token_amount_hash, @campaign_id)
+      @deal_service.send_coins(@token_amount_hash)
 
     end
 
@@ -113,7 +115,7 @@ RSpec.describe DealService do
     end
 
     it "checks current balance of campaign" do
-      expect(@deal_service.get_current_balance(@campaign_id)).to eq(@token_amount - (20000))
+      expect(@deal_service.get_current_balance).to eq(@token_amount - (20000))
     end
   end
 end

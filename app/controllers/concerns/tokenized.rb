@@ -2,7 +2,7 @@ module Tokenized
   extend ActiveSupport::Concern
 
   included do
-    before_action :token_service, except: [:create_wallet, :update_wallet]
+    before_action :token_service, only: [:get_balance, :get_tokens, :approve_tokens, :get_allowance]
   end
 
   def get_balance

@@ -1,20 +1,21 @@
 class DealService
 
-  def initialize
+  def initialize(campaign_id)
     @client = EthereumClient.new(Settings.http_path)
     deal_contract = Contract.find_by_name("deal")
     @deal = @client.set_contract(deal_contract.name, deal_contract.address, deal_contract.abi)
-    @deal.sender = Settings.owner   
+    @deal.sender = Settings.owner
+    @id = campaign_id   
   end
 
-  def create_campaign(advertiser, id, token_amount)
+  def create_campaign(advertiser, token_amount)
     address = advertiser.ethereum_wallet.address
-    @deal.transact.create_campaign(id.to_s, token_amount.to_i, address)
+    @deal.transact.create_campaign(@id, token_amount.to_i, address)
   end
 
-  def check_status(id)
-    status = @deal.call.check_status(id)
-    address = @deal.call.get_address_creator_by_id(id)
+  def check_status
+    status = @deal.call.check_status(@id)
+    address = @deal.call.get_address_creator_by_id(@id)
     return "not created" if address == "0"*40
 
     case status
@@ -28,31 +29,31 @@ class DealService
 
   end
 
-  def get_creator(id)
-    @deal.call.get_address_creator_by_id(id)
+  def get_creator
+    @deal.call.get_address_creator_by_id(@id)
   end
 
-  def get_token_amount(id)
-    @deal.call.get_token_amount_for_campaign(id)
+  def get_token_amount
+    @deal.call.get_token_amount_for_campaign(@id)
   end
 
-  def get_current_balance(id)
-    @deal.call.get_current_balance_for_campaign(id)
+  def get_current_balance
+    @deal.call.get_current_balance_for_campaign(@id)
   end
 
-  def add_tokens(id, token_amount)
-    @deal.transact.add_tokens_to_campaign(id, token_amount)
+  def add_tokens(token_amount)
+    @deal.transact.add_tokens_to_campaign(@id, token_amount)
   end
 
-  def destroy(id)
-    @deal.transact.destroy_campaign(id)
+  def destroy
+    @deal.transact.destroy_campaign(@id)
   end
 
-  def finish(id)
-    @deal.transact.finish_campaign(id)
+  def finish
+    @deal.transact.finish_campaign(@id)
   end
 
-  def send_coins(token_amount_hash, campaign_id)
+  def send_coins(token_amount_hash)
     router_owner_ids = token_amount_hash.keys
     token_amounts = token_amount_hash.values.map{|amount| amount.to_i }
 
@@ -61,6 +62,6 @@ class DealService
       owner.root ? owner.ethereum_wallet.address : owner.contract_address
     end
 
-    @deal.transact.send_coin(owner_addresses, token_amounts, campaign_id)
+    @deal.transact.send_coin(owner_addresses, token_amounts, @id)
   end
 end

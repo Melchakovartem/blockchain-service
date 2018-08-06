@@ -11,7 +11,7 @@ class V1::OwnersController < ApplicationController
   end
 
   def show
-    profile = Owner.by_profile(params[:profile_id])
+    profile = Owner.find_by_profile_id!(params[:profile_id])
     respond_with profile, serializer: V1::OwnerSerializer,
                  location: v1_owner_path
   end

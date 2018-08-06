@@ -24,7 +24,8 @@ class WalletService
     def update(profile_id, profile_type, *params)
       model = profile_type.capitalize.constantize
       profile = model.find_by_profile_id!(profile_id)
-      profile.ethereum_wallet.update(private_hex: key.private_hex, public_hex: key.public_hex, address: key.address)
+      profile.ethereum_wallet.update(private_hex: key.private_hex.downcase, 
+                                     public_hex: key.public_hex.downcase, address: key.address.downcase)
     end
 
     private
@@ -37,8 +38,8 @@ class WalletService
         model = profile_type.capitalize.constantize   
         profile = model.create(profile_id: profile_id)
         key = Eth::Key.new
-        profile.create_ethereum_wallet(private_hex: key.private_hex, 
-                                       public_hex: key.public_hex, address: key.address)
+        profile.create_ethereum_wallet(private_hex: key.private_hex.downcase, 
+                                       public_hex: key.public_hex.downcase, address: key.address.downcase)
         return profile
       end
 
