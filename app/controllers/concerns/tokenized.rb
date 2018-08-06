@@ -14,10 +14,10 @@ module Tokenized
   end
 
   def approve_tokens
-  	token_service.approve(params[:spender], params[:token_amount])
+  	token_service.approve(params[:token_amount])
   end
 
-  def get_allowance
-  	respond_with token_service.get_allowance(params[:spender])
+  def show_allowance
+  	respond_with token_service.get_allowance
   end
 end

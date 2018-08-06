@@ -1,20 +1,18 @@
 require "rails_helper"
 
-RSpec.describe "Get allowance" do
+RSpec.describe "Show allowance" do
   let(:profile_id) { rand(1..10) }
-  let(:profile_type) { "Owner" }
-  let!(:spender) { Eth::Key.new.address }
+  let(:profile_type) { "Advertiser" }
   let(:amount) { rand(100..1000) }
-  let(:profile_params) { { root: true } }
 
   context "profile exist" do
-    let!(:owner) { WalletService.create(profile_id, profile_type, profile_params) }
-    let(:priv_key) { owner.ethereum_wallet.private_hex }
+    let!(:advertiser) { WalletService.create(profile_id, profile_type) }
+    let(:priv_key) { advertiser.ethereum_wallet.private_hex }
     let(:token_service) { TokenService.new(priv_key) }
 
     before do 
-      token_service.approve(spender, amount)
-      get get_allowance_v1_owners_path, params: { profile_id: profile_id, spender: spender }
+      token_service.approve(amount)
+      get  v1_advertiser_show_allowance_path(profile_id), params: { format: :json }
     end
 
     it "returns allowance" do
@@ -28,7 +26,7 @@ RSpec.describe "Get allowance" do
 
   context "profile does not exist" do
     before do
-      get get_balance_v1_owners_path, params: { profile_id: profile_id }
+      get v1_advertiser_show_allowance_path(profile_id), params: { format: :json }
     end
 
     it "returns status :not_found" do

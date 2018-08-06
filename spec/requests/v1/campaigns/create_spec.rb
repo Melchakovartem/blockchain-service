@@ -16,7 +16,7 @@ RSpec.describe "Create campaign" do
 
     before do
       token_service.get_tokens(10000)
-      token_service.approve(deal.address, 10**25)
+      token_service.approve(10**25)
       post v1_campaigns_path, params: { profile_id: profile_id, campaign_id: campaign_id, 
                                                          token_amount: amount}
     end

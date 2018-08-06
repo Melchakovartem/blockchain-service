@@ -13,11 +13,11 @@ RSpec.describe "Approve tokens for wallet" do
     let(:token_service) { TokenService.new(priv_key) }
 
     before do
-      post approve_tokens_v1_owners_path, params: { profile_id: profile_id, token_amount: amount, spender: spender }
+      post v1_owner_approve_tokens_path(profile_id), params: { token_amount: amount, spender: spender }
     end
 
     it "recieves tokens to wallet" do
-      expect(token_service.get_allowance(spender)).to eq(amount)
+      expect(token_service.get_allowance).to eq(amount)
     end 
 
     it "returns status :no_content" do
@@ -27,7 +27,7 @@ RSpec.describe "Approve tokens for wallet" do
 
   context "profile does not exist" do
     before do 
-      post approve_tokens_v1_owners_path, params: { profile_id: profile_id, token_amount: amount, spender: spender }
+      post v1_owner_approve_tokens_path(profile_id), params: { token_amount: amount, spender: spender }
     end
 
     it "returns status :not_found" do

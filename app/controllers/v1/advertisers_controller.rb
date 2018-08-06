@@ -4,12 +4,12 @@ class V1::AdvertisersController < ApplicationController
   before_action :advertiser, only: [:show]
 
   def create_wallet
-  	respond_with WalletService.create(params[:profile_id], "Advertiser"), serializer: V1::ProfileSerializer, 
+  	respond_with WalletService.create(params[:advertiser_id], "Advertiser"), serializer: V1::ProfileSerializer, 
   				       location: v1_advertisers_path
   end
 
   def update_wallet
-  	respond_with WalletService.update(params[:profile_id], "Advertiser")
+  	respond_with WalletService.update(params[:advertiser_id], "Advertiser")
   end
 
   def show
@@ -20,7 +20,7 @@ class V1::AdvertisersController < ApplicationController
   private
 
     def advertiser
-      Advertiser.find_by_profile_id!(params[:profile_id])
+      Advertiser.find_by_profile_id!(params[:id] || params[:advertiser_id])
     end
 
     def token_service

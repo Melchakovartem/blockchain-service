@@ -15,7 +15,7 @@ RSpec.describe "Show campaign" do
   context "exist campaign" do
     before do
       token_service.get_tokens(10**10)
-      token_service.approve(deal.address, 10**25)
+      token_service.approve(10**25)
       deal_service.create_campaign(advertiser, token_amount)
       get v1_campaign_path(campaign_id), params: { format: :json }
     end

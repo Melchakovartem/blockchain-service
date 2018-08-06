@@ -13,7 +13,7 @@ RSpec.describe "Get balance of wallet" do
 
     before do 
       token_service.get_tokens(amount)
-      get get_balance_v1_advertisers_path, params: { profile_id: profile_id }
+      get v1_advertiser_get_balance_path(profile_id), params: { format: :json }
     end
 
     it "returns balance" do
@@ -27,7 +27,7 @@ RSpec.describe "Get balance of wallet" do
 
   context "profile does not exist" do
     before do
-      get get_balance_v1_advertisers_path, params: { profile_id: profile_id }
+      get v1_advertiser_get_balance_path(profile_id), params: { format: :json }
     end
 
     it "returns balance" do

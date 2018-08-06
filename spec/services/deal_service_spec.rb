@@ -11,7 +11,7 @@ RSpec.describe DealService do
     @campaign_id = FFaker::Lorem.word
     @deal = Contract.find_by_name("deal")
     @token_service.get_tokens(10**10)
-    @token_service.approve(@deal.address, 10**25)
+    @token_service.approve(10**25)
   end
 
   describe "Creates campaign" do

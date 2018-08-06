@@ -4,7 +4,6 @@ RSpec.describe "Approve tokens for wallet" do
   let(:profile_id) { rand(1..10) }
   let(:profile_type) { "Advertiser" }
   let(:amount) { rand(100..1000) }
-  let!(:spender) { Eth::Key.new.address }
   
 
   context "profile exist" do
@@ -13,12 +12,11 @@ RSpec.describe "Approve tokens for wallet" do
     let(:token_service) { TokenService.new(priv_key) }
     
     before do 
-      post approve_tokens_v1_advertisers_path, params: { profile_id: profile_id, token_amount: amount, 
-                                                         spender: spender }
+      post v1_advertiser_approve_tokens_path(profile_id), params: { token_amount: amount }
     end
 
     it "recieves tokens to wallet" do
-      allowance = token_service.get_allowance(spender)
+      allowance = token_service.get_allowance
       expect(allowance).to eq(amount)
     end 
 
@@ -29,7 +27,7 @@ RSpec.describe "Approve tokens for wallet" do
 
   context "profile does not exist" do
     before do 
-      post approve_tokens_v1_advertisers_path, params: { profile_id: profile_id, token_amount: amount, spender: spender }
+      post v1_advertiser_approve_tokens_path(profile_id), params: { token_amount: amount }
     end
 
     it "returns status :not_found" do

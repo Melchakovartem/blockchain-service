@@ -8,7 +8,7 @@ RSpec.describe "Wallet update" do
 
     context "with exist profile id" do
       before do
-        patch update_wallet_v1_owners_path, params: { profile_id: profile_id }
+        patch v1_owner_update_wallet_path(profile_id), params: { format: :json }
       end
 
       it "returns status :no_content" do
@@ -21,13 +21,10 @@ RSpec.describe "Wallet update" do
     end
 
     context "with not exist profile id" do
-      let!(:profile_id) { rand(1..100) }
-      let!(:owner) { Fabricate(:owner, profile_id: profile_id) }
-      let!(:ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: owner.id, userable_type: "Owner") }
-
+      let!(:new_profile_id) { rand(1..100) }
 
       before do
-        patch update_wallet_v1_owners_path, params: { profile_id: rand(101..200) }
+        patch v1_owner_update_wallet_path(new_profile_id), params: { format: :json }
       end
 
       it "returns status :no_content" do

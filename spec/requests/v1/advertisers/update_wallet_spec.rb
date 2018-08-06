@@ -8,7 +8,7 @@ RSpec.describe "Wallet update" do
 
     context "with exist profile id" do
       before do
-        patch update_wallet_v1_advertisers_path, params: { profile_id: profile_id }
+        patch v1_advertiser_update_wallet_path(profile_id)
       end
 
       it "returns status :no_content" do
@@ -21,16 +21,13 @@ RSpec.describe "Wallet update" do
     end
 
     context "with not exist profile id" do
-      let!(:profile_id) { rand(1..100) }
-      let!(:advertiser) { Fabricate(:advertiser, profile_id: profile_id) }
-      let!(:ethereum_wallet) { Fabricate(:ethereum_wallet, userable_id: advertiser.id, userable_type: "Advertiser") }
-
+      let!(:new_profile_id) { rand(1..100) }
 
       before do
-        patch update_wallet_v1_advertisers_path, params: { profile_id: rand(101..200) }
+        patch v1_advertiser_update_wallet_path(new_profile_id)
       end
 
-      it "returns status :no_content" do
+      it "returns status :not_found" do
         expect(response).to have_http_status(:not_found)
       end 
 

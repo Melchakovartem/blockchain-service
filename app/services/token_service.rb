@@ -5,7 +5,8 @@ class TokenService
     @private_key = priv_key
     @address = Eth::Key.new(priv: @private_key).address
     @wetoken = Contract.find_by_name("wetoken")
-    @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi)   
+    @deal = Contract.find_by_name("deal")
+    @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi) 
   end
 
   def get_tokens(amount)
@@ -16,12 +17,14 @@ class TokenService
     @contract.call.balance_of(@address)
   end
 
-  def get_allowance(spender)
-    @contract.call.allowance(@address, spender)
+  def get_allowance
+    @contract.call.allowance(@address, @deal.address)
   end
     
-  def approve(spender, amount)
+  def approve(amount)
     key = Eth::Key.new(priv: @private_key)
+
+    spender = @deal.address
 
     data = perform_data('approve(address,uint256)', spender[2..42], amount)
 

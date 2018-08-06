@@ -2,16 +2,16 @@ class V1::OwnersController < ApplicationController
   include Tokenized
 
   def create_wallet
-  	respond_with WalletService.create(params[:profile_id], "Owner", profile_params), serializer: V1::ProfileSerializer, 
+  	respond_with WalletService.create(params[:owner_id], "Owner", profile_params), serializer: V1::ProfileSerializer, 
   				       location: v1_advertisers_path
   end
 
   def update_wallet
-  	respond_with WalletService.update(params[:profile_id], "Owner")
+  	respond_with WalletService.update(params[:owner_id], "Owner")
   end
 
   def show
-    profile = Owner.find_by_profile_id!(params[:profile_id])
+    profile = Owner.find_by_profile_id!(params[:owner_id] || params[:id])
     respond_with profile, serializer: V1::OwnerSerializer,
                  location: v1_owner_path
   end
@@ -23,7 +23,8 @@ class V1::OwnersController < ApplicationController
   	end
 
     def token_service
-      priv_key = Owner.find_by_profile_id!(params[:profile_id]).ethereum_wallet.private_hex
+      id = params[:owner_id] || params[:id]
+      priv_key = Owner.find_by_profile_id!(id).ethereum_wallet.private_hex
       TokenService.new(priv_key)
     end
 end

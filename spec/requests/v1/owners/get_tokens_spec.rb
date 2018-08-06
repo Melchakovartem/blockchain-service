@@ -12,7 +12,7 @@ RSpec.describe "Get tokens to wallet" do
     let(:token_service) { TokenService.new(priv_key) }
 
     before do 
-      post get_tokens_v1_owners_path, params: { profile_id: profile_id, token_amount: amount }
+      post v1_owner_get_tokens_path(profile_id), params: { token_amount: amount }
     end
 
     it "recieves tokens to wallet" do
@@ -26,7 +26,7 @@ RSpec.describe "Get tokens to wallet" do
 
   context "profile does not exist" do
     before do 
-      post get_tokens_v1_owners_path, params: { profile_id: profile_id, token_amount: amount }
+      post v1_owner_get_tokens_path(profile_id), params: { token_amount: amount }
     end
 
     it "returns status :not_found" do

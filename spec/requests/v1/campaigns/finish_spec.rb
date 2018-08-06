@@ -16,7 +16,7 @@ RSpec.describe "Finish campaign" do
     
     before do
       token_service.get_tokens(20000)
-      token_service.approve(deal.address, 10**25)
+      token_service.approve(10**25)
       deal_service.create_campaign(advertiser, token_amount)
       patch v1_campaign_finish_path(campaign_id), params: {  format: :json }
     end
