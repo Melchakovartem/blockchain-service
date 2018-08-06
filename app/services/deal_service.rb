@@ -42,7 +42,8 @@ class DealService
   end
 
   def add_tokens(token_amount)
-    @deal.transact.add_tokens_to_campaign(@id, token_amount)
+    return ActiveRecord::RecordNotFound if check_status == "not created"
+    @deal.transact.add_tokens_to_campaign(@id, token_amount.to_i)
   end
 
   def destroy

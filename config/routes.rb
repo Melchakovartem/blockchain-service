@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
     resources :owners, only: :show, param: :profile_id
     resources :advertisers, only: :show, param: :profile_id
-    resources :campaigns, param: :campaign_id
+    resources :campaigns, param: :campaign_id do
+      patch :finish
+    end
   end
 end

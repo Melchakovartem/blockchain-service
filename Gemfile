@@ -23,6 +23,7 @@ gem "redis"
 gem 'settingslogic'
 gem 'sidekiq'
 gem 'web3-eth'
+gem 'money-tree', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug', platform: :mri
