@@ -17,16 +17,6 @@ class V1::AdvertisersController < ApplicationController
                  location: v1_advertiser_path
   end
 
-  def create_campaign
-    advertiser = Advertiser.find_by_profile_id!(params[:profile_id])
-    DealService.new.create_campaign(advertiser, params[:campaign_id], params[:token_amount])
-  end
-
-  def show_campaign
-    pp params
-    #respond_with DealService.new, campaign_id: params[:id], serializer: V1::CampaignSerializer
-  end
-
   private
 
     def profile_params
