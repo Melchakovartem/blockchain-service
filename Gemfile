@@ -26,6 +26,7 @@ gem 'web3-eth'
 gem 'money-tree', '~> 0.10.0'
 gem "dotenv"
 gem "dotenv-deployment", require: "dotenv/deployment"
+gem "pg"
 
 group :development, :test do
   gem 'byebug', platform: :mri
