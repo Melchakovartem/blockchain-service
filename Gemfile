@@ -27,6 +27,7 @@ gem 'money-tree', '~> 0.10.0'
 gem "dotenv"
 gem "dotenv-deployment", require: "dotenv/deployment"
 gem "pg"
+gem "unicorn"
 
 group :development, :test do
   gem 'byebug', platform: :mri
