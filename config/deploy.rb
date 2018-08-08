@@ -9,7 +9,7 @@ set :deploy_to, "/home/manage/blockchain"
 set :deploy_user, "manage"
 
 # Default value for :linked_files is []
-append :linked_files, "config/database.yml", ".env"
+append :linked_files, "config/database.yml", ".env", "config/application.yml"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
