@@ -15,6 +15,12 @@ class V1::CampaignsController < ApplicationController
     deal_service.add_tokens(params[:token_amount])
   end
 
+  def send_coins
+    #pp params.fetch(:token_distribution)
+    #pp params
+    deal_service.send_coins(params.fetch(:token_distribution))
+  end
+
   def destroy  
     deal_service.destroy
   end

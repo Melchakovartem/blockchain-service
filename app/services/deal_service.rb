@@ -59,7 +59,7 @@ class DealService
     token_amounts = token_amount_hash.values.map{|amount| amount.to_i }
 
     owner_addresses = router_owner_ids.map do |id|
-      owner = Owner.by_profile(id)
+      owner = Owner.find_by_profile_id!(id)
       owner.root ? owner.ethereum_wallet.address : owner.contract_address
     end
 

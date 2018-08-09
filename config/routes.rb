@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :campaigns do
       patch :finish
+      post :send_coins
     end
 
     resources :owners, only: :show, param: :profile_id
