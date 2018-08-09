@@ -1,4 +1,4 @@
-class DeployContractService
+exiclass DeployContractService
   class << self
     def call(profile_id, referrer_profile_id)
       prepare_to_deploy
@@ -24,7 +24,6 @@ class DeployContractService
       client = EthereumClient.new(Settings.http_path)
       
       @contract = client.create_contract("config/contracts/referral.sol", "ReferralContract", 1)
-      @contract.sender = Settings.owner
     end
   end
 end
