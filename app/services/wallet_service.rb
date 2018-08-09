@@ -4,17 +4,19 @@ class WalletService
 
     def create(profile_id, profile_type, *params)
       @client = EthereumClient.new(Settings.http_path)
+      ActiveRecord::Base.transaction do
 
-      @profile = create_model_and_wallet(profile_id, profile_type)
+        @profile = create_model_and_wallet(profile_id, profile_type)
       
-      send_ether
+        send_ether
 
-      if profile_type == "Owner"
-        if params.first[:root] == "false" 
-          DeployContractService.call(params.first[:referrer_profile_id], profile_id)
-          @profile.update(root: "false")
-        else
-          @profile.update(root: "true")
+        if profile_type == "Owner"
+          if params.first[:root] == "false" 
+            DeployContractService.call(params.first[:referrer_profile_id], profile_id)
+            @profile.update(root: "false")
+          else
+            @profile.update(root: "true")
+          end
         end
       end
 
@@ -46,8 +48,8 @@ class WalletService
       def send_ether
         key = Eth::Key.new(priv: Settings.priv_hex)
         address = @profile.ethereum_wallet.address
-        #@client.transfer({from: key.address, to: address, value: 0.01 * EthereumClient::WEI_IN_ETHER })
-        @client.transfer(key, address, 10**16)
+        @client.eth_send_transaction({from: key.address, to: address, value: 0.01 * EthereumClient::WEI_IN_ETHER })
+        #@client.transfer(key, address, 10**16)
       end
   end
 end

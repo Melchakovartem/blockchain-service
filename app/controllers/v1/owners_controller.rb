@@ -3,7 +3,7 @@ class V1::OwnersController < ApplicationController
 
   def create_wallet
   	respond_with WalletService.create(params[:owner_id], "Owner", profile_params), serializer: V1::ProfileSerializer, 
-  				       location: v1_advertisers_path
+  				       location: v1_owners_path
   end
 
   def update_wallet
