@@ -4,11 +4,8 @@ class V1::AdvertisersController < ApplicationController
   before_action :advertiser, only: [:show]
 
   def create_wallet
-    file = File.open("params.txt", "w")
-    file.puts params
-    file.close
-  	#WalletService.create(params[:advertiser_id], "Advertiser"), serializer: V1::ProfileSerializer, 
-  	#			       location: v1_advertisers_path
+  	WalletService.create(params[:advertiser_id], "Advertiser"), serializer: V1::ProfileSerializer, 
+  				       location: v1_advertisers_path
   end
 
   def update_wallet
