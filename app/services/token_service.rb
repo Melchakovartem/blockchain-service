@@ -6,7 +6,8 @@ class TokenService
     @address = Eth::Key.new(priv: @private_key).address
     @wetoken = Contract.find_by_name("wetoken")
     @deal = Contract.find_by_name("deal")
-    @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi) 
+    @contract = @client.set_contract(@wetoken.name, @wetoken.address, @wetoken.abi)
+    @contract.sender = Settings.owner 
   end
 
   def get_tokens(amount)
