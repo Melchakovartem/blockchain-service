@@ -47,7 +47,7 @@ class WalletService
         key = Eth::Key.new(priv: Settings.priv_hex)
         address = @profile.ethereum_wallet.address
         #@client.transfer({from: key.address, to: address, value: 0.01 * EthereumClient::WEI_IN_ETHER })
-        @client.transfer(key, address, 0.01 * EthereumClient::WEI_IN_ETHER)
+        @client.transfer(key, address, 10**16)
       end
   end
 end
