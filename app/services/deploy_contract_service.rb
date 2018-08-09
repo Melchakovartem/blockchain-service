@@ -16,7 +16,7 @@ class DeployContractService
       wetoken = Contract.find_by_name("wetoken")
 
       ActiveRecord::Base.transaction do
-        @contract.deploy(wetoken.address, referral.ethereum_wallet.address, referrer_address)
+        @contract.deploy_and_wait(wetoken.address, referral.ethereum_wallet.address, referrer_address)
         referral.update(referrer_id: profile_id, contract_address: @contract.address, root: false)
       end
     end
