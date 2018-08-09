@@ -4,8 +4,7 @@ class V1::AdvertisersController < ApplicationController
   before_action :advertiser, only: [:show]
 
   def create_wallet
-  	respond_with WalletService.create(params[:advertiser_id], "Advertiser"), serializer: V1::ProfileSerializer, 
-  				       location: v1_advertisers_path
+  	WalletService.create(params[:advertiser_id], "Advertiser")
   end
 
   def update_wallet
