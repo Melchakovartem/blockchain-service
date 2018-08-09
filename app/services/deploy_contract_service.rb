@@ -1,4 +1,4 @@
-exiclass DeployContractService
+class DeployContractService
   class << self
     def call(profile_id, referrer_profile_id)
       prepare_to_deploy
