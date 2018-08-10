@@ -16,8 +16,6 @@ class V1::CampaignsController < ApplicationController
   end
 
   def send_coins
-    #pp params.fetch(:token_distribution)
-    #pp params
     deal_service.send_coins(params.fetch(:token_distribution))
   end
 
