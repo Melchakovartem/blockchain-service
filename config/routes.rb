@@ -27,4 +27,6 @@ Rails.application.routes.draw do
     resources :advertisers, only: :show, param: :profile_id
     resources :campaigns, param: :campaign_id
   end
+  
+  resources :blocks, only: [:show, :index]
 end
