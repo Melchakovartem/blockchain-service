@@ -1,16 +1,1 @@
-<table>
-  <tr>
-   <th>Tx Hash</th>
-   <th>From</th>
-   <th>To</th>
-   <th>Value</th>
-  </tr>
-  <% @transactions.each do |t| %>
-  <tr>
-    <td><%= link_to t.t_hash, transaction_path(t.t_hash) %> </td>
-    <td><%= t.t_from %> </td>
-    <td><%= t.t_to %> </td>
-    <td><%= t.t_value.to_f/10**18 %> </td>
-   </tr>
-<% end %>
-</table>
+<%= render partial: 'index', locals: { transactions: @transactions } %>

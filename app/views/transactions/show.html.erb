@@ -1,11 +1,1 @@
-Block hash: <%= @transaction.t_blockHash %><br>
-Block number: <%= @transaction.t_blockNumber %><br>
-From: <%= @transaction.t_from %><br>
-To: <%= @transaction.t_to %><br>
-Gas: <%= @transaction.t_gas %><br>
-Value: <%= @transaction.t_value.to_f/10**18 %><br>
-Gas price: <%= @transaction.t_gasPrice %><br>
-Hash: <%= @transaction.t_hash %><br>
-Input: <%= @transaction.t_input %><br>
-Nonce: <%= @transaction.t_nonce %><br>
-Transaction index: <%= @transaction.t_transactionIndex %>
+<%= render partial: 'show', locals: { transaction: @transaction } %>
