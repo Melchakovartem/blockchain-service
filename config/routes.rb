@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root to: 'blocks#index'
+
   api_version(module: "V1", path: { value: "v1" }, defaults: { format: :json }) do
   	resources :advertisers do
   		post :create_wallet
@@ -32,6 +34,5 @@ Rails.application.routes.draw do
     resources :transactions, only: :index
   end
   resources :transactions, only: :show
-
-  root to: 'blocks#index'
+  resources :search, only: :index
 end

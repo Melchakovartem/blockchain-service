@@ -1,0 +1,40 @@
+<% case @model %>
+<% when "Block" %>
+result number: <%=@result.b_number%><br>
+result hash: <%=@result.b_hash%><br>
+Nonce: <%=@result.b_nonce%><br>
+Parent hash: <%=@result.b_parentHash%><br>
+Sha3Uncles: <%=@result.b_sha3Uncles%><br>
+Size: <%=@result.b_size%> bytes<br>
+Transactions: <%=link_to @result.b_transactions.size, block_transactions_path(@result) %>  in current result<br>
+TimeStamp: <%= DateTime.strptime(@result.b_timestamp,'%s').utc%><br>
+<% when "Hash" %>
+Block hash: <%= @result.t_blockHash %><br>
+Block number: <%= @result.t_blockNumber %><br>
+From: <%= @result.t_from %><br>
+To: <%= @result.t_to %><br>
+Gas: <%= @result.t_gas %><br>
+Value: <%= @result.t_value.to_f/10**18 %><br>
+Gas price: <%= @result.t_gasPrice %><br>
+Hash: <%= @result.t_hash %><br>
+Input: <%= @result.t_input %><br>
+Nonce: <%= @result.t_nonce %><br>
+Transaction index: <%= @result.t_transactionIndex %>
+<% when "Address" %>
+<table>
+  <tr>
+   <th>Tx Hash</th>
+   <th>From</th>
+   <th>To</th>
+   <th>Value</th>
+  </tr>
+  <% @result.each do |t| %>
+  <tr>
+    <td><%= link_to t.t_hash, transaction_path(t.t_hash) %> </td>
+    <td><%= t.t_from %> </td>
+    <td><%= t.t_to %> </td>
+    <td><%= t.t_value.to_f/10**18 %> </td>
+   </tr>
+<% end %>
+</table>
+<% end %>
