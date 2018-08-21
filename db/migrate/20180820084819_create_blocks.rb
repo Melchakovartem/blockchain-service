@@ -18,9 +18,9 @@ class CreateBlocks < ActiveRecord::Migration[5.0]
       t.text :b_stateRoot
       t.text :b_timestamp
       t.text :b_totalDifficulty
+      t.string :b_transactions, using: 'gin'
       t.text :b_transactionsRoot
       t.text :b_uncles
-      t.integer :b_txns
 
       t.timestamps
     end

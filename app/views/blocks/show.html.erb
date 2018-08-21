@@ -4,6 +4,6 @@ Nonce: <%=@block.b_nonce%><br>
 Parent hash: <%=@block.b_parentHash%><br>
 Sha3Uncles: <%=@block.b_sha3Uncles%><br>
 Size: <%=@block.b_size%> bytes<br>
-Transactions: <%=@block.b_txns%>  in current block<br>
+Transactions: <%=link_to @block.b_transactions.size, block_transactions_path(@block) %>  in current block<br>
 TimeStamp: <%= DateTime.strptime(@block.b_timestamp,'%s').utc%><br>
 

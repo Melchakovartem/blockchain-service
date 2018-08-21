@@ -37,9 +37,9 @@ ActiveRecord::Schema.define(version: 20180820084819) do
     t.text     "b_stateRoot"
     t.text     "b_timestamp"
     t.text     "b_totalDifficulty"
+    t.string   "b_transactions"
     t.text     "b_transactionsRoot"
     t.text     "b_uncles"
-    t.integer  "b_txns"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["b_hash"], name: "index_blocks_on_b_hash"

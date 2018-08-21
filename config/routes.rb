@@ -27,6 +27,11 @@ Rails.application.routes.draw do
     resources :advertisers, only: :show, param: :profile_id
     resources :campaigns, param: :campaign_id
   end
-  
-  resources :blocks, only: [:show, :index]
+
+  resources :blocks, only: [:show, :index] do
+    resources :transactions, only: :index
+  end
+  resources :transactions, only: :show
+
+  root to: 'blocks#index'
 end

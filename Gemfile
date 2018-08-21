@@ -24,10 +24,11 @@ gem 'settingslogic'
 gem 'sidekiq'
 gem 'web3-eth'
 gem 'money-tree', '~> 0.10.0'
-gem "dotenv"
-gem "dotenv-deployment", require: "dotenv/deployment"
-gem "pg"
-gem "unicorn"
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'pg'
+gem 'unicorn'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'byebug', platform: :mri

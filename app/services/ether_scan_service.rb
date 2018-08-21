@@ -37,13 +37,13 @@ class EtherScanService
                       b_transactionsRoot: block["transactionsRoot"],b_stateRoot: block["stateRoot"], b_receiptsRoot: block["receiptsRoot"], 
                       b_miner: block["miner"], b_difficulty: block["difficulty"], b_totalDifficulty: block["totalDifficulty"], 
                       b_extraData: block["extraData"], b_size: block["size"], b_gasLimit: to_dec(block["gasLimit"]),
-                      b_gasUsed: to_dec(block["gasUsed"]), b_timestamp: to_dec(block["timestamp"]), b_txns: block["transactions"].size)
+                      b_gasUsed: to_dec(block["gasUsed"]), b_timestamp: to_dec(block["timestamp"]), b_transactions: block["transactions"].to_a)
     end
 
     def create_transaction(tr)
       Transaction.create(t_hash: tr["hash"], t_nonce: to_dec(tr["nonce"]), t_blockHash: tr["blockHash"], 
                          t_blockNumber: @number, t_transactionIndex: tr["transactionIndex"], t_from: tr["from"], 
-                         t_to: tr["to"], t_value: tr["value"], t_gas: tr["gas"], 
+                         t_to: tr["to"], t_value: to_dec(tr["value"]), t_gas: tr["gas"], 
                          t_gasPrice: to_dec(tr["gasPrice"]), t_input: tr["input"])
     end
   end

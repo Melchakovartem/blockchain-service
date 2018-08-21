@@ -6,9 +6,10 @@
   </tr>
   <% @blocks.each do |b| %>
   <tr>
-    <td><%= link_to b.b_number, block_path(b) %> <td>
-    <td><%= b.b_txns %></td>
+    <td><%= link_to b.b_number, block_path(b) %> </td>
+    <td><%= b.b_transactions.size %></td>
     <td><%= DateTime.strptime(b.b_timestamp,'%s').utc %></td>
    </tr>
 <% end %>
 </table>
+<%= will_paginate @blocks %>
