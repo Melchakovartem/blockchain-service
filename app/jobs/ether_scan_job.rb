@@ -1,7 +1,7 @@
 class EtherScanJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform
     EtherScanService.call
   end
 end
