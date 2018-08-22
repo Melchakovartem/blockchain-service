@@ -38,7 +38,7 @@ end
 
 group :development do
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.0.5'
+  gem 'listen'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'capistrano', require: false
@@ -48,7 +48,6 @@ group :development do
   gem 'capistrano3-unicorn', require: false
   gem 'capistrano-rails-console', require: false
   gem 'capistrano-sidekiq', require: false
-
 end
 
 group :test do

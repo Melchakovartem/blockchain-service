@@ -314,7 +314,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   json_spec
-  listen (~> 3.0.5)
+  listen
   money-tree (~> 0.10.0)
   pg
   puma (~> 3.0)
