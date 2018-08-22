@@ -8,6 +8,7 @@ require "capistrano/bundler"
 require "capistrano/rails"
 require "capistrano3/unicorn"
 require "capistrano/rails/console"
+require "capistrano/sidekiq"
 
 # Load the SCM plugin appropriate to your project:
 #

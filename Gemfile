@@ -29,6 +29,7 @@ gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'pg'
 gem 'unicorn'
 gem 'will_paginate'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
@@ -46,6 +47,8 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-unicorn', require: false
   gem 'capistrano-rails-console', require: false
+  gem 'capistrano-sidekiq', require: false
+
 end
 
 group :test do

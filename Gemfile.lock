@@ -66,6 +66,9 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano-sidekiq (1.0.2)
+      capistrano (>= 3.9.0)
+      sidekiq (>= 3.4)
     capistrano3-unicorn (0.2.1)
       capistrano (~> 3.1, >= 3.1.0)
     case_transform (0.2)
@@ -176,6 +179,22 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (3.3.5)
+    redis-actionpack (5.0.1)
+      actionpack (>= 4.0, < 6)
+      redis-rack (>= 1, < 3)
+      redis-store (>= 1.1.0, < 1.4.0)
+    redis-activesupport (5.0.3)
+      activesupport (>= 3, < 6)
+      redis-store (~> 1.3.0)
+    redis-rack (2.0.2)
+      rack (>= 1.5, < 3)
+      redis-store (>= 1.2, < 1.4)
+    redis-rails (5.0.2)
+      redis-actionpack (>= 5.0, < 6)
+      redis-activesupport (>= 5.0, < 6)
+      redis-store (>= 1.2, < 2)
+    redis-store (1.3.0)
+      redis (>= 2.2)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -282,6 +301,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rails-console
   capistrano-rvm
+  capistrano-sidekiq
   capistrano3-unicorn
   coffee-rails (~> 4.2)
   database_cleaner
@@ -300,6 +320,7 @@ DEPENDENCIES
   puma (~> 3.0)
   rails (~> 5.0.7)
   redis
+  redis-rails
   responders
   rspec-rails
   sass-rails (~> 5.0)
