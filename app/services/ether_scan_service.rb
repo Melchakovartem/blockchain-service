@@ -19,11 +19,11 @@ class EtherScanService
 
           block["transactions"].each do |tr_hash|
             tr = client.eth_get_transaction_by_hash(tr_hash)["result"]
-            create_transaction(tr, block["number"])
+            create_transaction(tr)
           end
-
+          @number += 1
         end
-        @number += 1
+        
       end
     end
     
@@ -32,7 +32,7 @@ class EtherScanService
     end
 
     def create_block(block)
-      Block.create(b_number: block["number"], b_hash: block["hash"], b_parentHash: block["parentHash"], b_mixHash: block["mixHash"],
+      Block.create(b_number: @number, b_hash: block["hash"], b_parentHash: block["parentHash"], b_mixHash: block["mixHash"],
                       b_nonce: to_dec(block["nonce"]), b_sha3Uncles: block["sha3Uncles"], b_logsBloom: block["logsBloom"], 
                       b_transactionsRoot: block["transactionsRoot"],b_stateRoot: block["stateRoot"], b_receiptsRoot: block["receiptsRoot"], 
                       b_miner: block["miner"], b_difficulty: block["difficulty"], b_totalDifficulty: block["totalDifficulty"], 
@@ -40,8 +40,8 @@ class EtherScanService
                       b_gasUsed: to_dec(block["gasUsed"]), b_timestamp: to_dec(block["timestamp"]), b_transactions: block["transactions"].to_a)
     end
 
-    def create_transaction(tr, number)
-      Transaction.create(t_hash: number, t_nonce: to_dec(tr["nonce"]), t_blockHash: tr["blockHash"], 
+    def create_transaction(tr)
+      Transaction.create(t_hash: tr["hash"], t_nonce: to_dec(tr["nonce"]), t_blockHash: tr["blockHash"], 
                          t_blockNumber: @number, t_transactionIndex: tr["transactionIndex"], t_from: tr["from"], 
                          t_to: tr["to"], t_value: to_dec(tr["value"]), t_gas: tr["gas"], 
                          t_gasPrice: to_dec(tr["gasPrice"]), t_input: tr["input"])
