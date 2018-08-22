@@ -1,6 +1,6 @@
 class BlocksController < ApplicationController
   def index
-  	@blocks = Block.paginate(:page => params[:page], :per_page => 30)
+  	@blocks = Block.paginate(:page => params[:page], :per_page => 30).order(b_number: :asc)
   end
 
   def show
