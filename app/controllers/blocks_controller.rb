@@ -4,6 +4,6 @@ class BlocksController < ApplicationController
   end
 
   def show
-  	@block = Block.find_by_b_number(params[:id])
+  	@block = Block.find_by_b_number!(params[:id])
   end
 end

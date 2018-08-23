@@ -36,7 +36,7 @@ class EtherScanService
                       b_nonce: to_dec(block["nonce"]), b_sha3Uncles: block["sha3Uncles"], b_logsBloom: block["logsBloom"], 
                       b_transactionsRoot: block["transactionsRoot"],b_stateRoot: block["stateRoot"], b_receiptsRoot: block["receiptsRoot"], 
                       b_miner: block["miner"], b_difficulty: block["difficulty"], b_totalDifficulty: block["totalDifficulty"], 
-                      b_extraData: block["extraData"], b_size: block["size"], b_gasLimit: to_dec(block["gasLimit"]),
+                      b_extraData: block["extraData"], b_size: to_dec(block["size"]), b_gasLimit: to_dec(block["gasLimit"]),
                       b_gasUsed: to_dec(block["gasUsed"]), b_timestamp: to_dec(block["timestamp"]), b_transactions: block["transactions"].to_a)
     end
 
