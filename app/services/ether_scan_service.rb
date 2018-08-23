@@ -43,7 +43,7 @@ class EtherScanService
     def create_transaction(tr)
       Transaction.create(t_hash: tr["hash"], t_nonce: to_dec(tr["nonce"]), t_blockHash: tr["blockHash"], 
                          t_blockNumber: @number, t_transactionIndex: tr["transactionIndex"], t_from: tr["from"], 
-                         t_to: tr["to"], t_value: to_dec(tr["value"]), t_gas: tr["gas"], 
+                         t_to: tr["to"], t_value: to_dec(tr["value"]), t_gas: to_dec(tr["gas"]), 
                          t_gasPrice: to_dec(tr["gasPrice"]), t_input: tr["input"])
     end
   end
