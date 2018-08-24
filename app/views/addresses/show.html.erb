@@ -1,0 +1,6 @@
+<div class="container">
+  Address: <%= params[:id] %><br>
+  Balance: <%= @eth_balance %> ETH<br>
+  Token balance: <%= @wt_balance %> WT<br>
+</div>
+<%= render partial: 'transactions/index', locals: { transactions: @address } %>
