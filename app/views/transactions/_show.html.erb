@@ -2,7 +2,7 @@
   Block hash: <%= transaction.t_blockHash %><br>
   Block number: <%=link_to transaction.t_blockNumber, block_path(transaction.t_blockNumber) %><br>
   From: <%= transaction.t_from %><br>
-  To: <%= t.t_to %><br>
+  To: <%= t.t_to.nil? : "Contract creation" : t.t_to %><br>
   Gas: <%= transaction.t_gas.to_f/10**9 %> Gwei<br>
   Value: <%= transaction.t_value.to_f/10**18 %><br>
   Gas price: <%= transaction.t_gasPrice.to_f/10**9 %> Gwei<br>
