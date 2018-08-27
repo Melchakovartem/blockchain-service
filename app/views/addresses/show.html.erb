@@ -3,7 +3,7 @@
     Contract address: <%= params[:id] %><br>
 
   <% else %>
-    Address: <%= params[:id] %>
+    Address: <%= params[:id] %><br>
   <% end %>
   Balance: <%= @eth_balance %> ETH<br>
   Token balance: <%= @wt_balance %> WT<br>
@@ -20,7 +20,7 @@
     <li id="one"><%= render partial: 'transactions/index', locals: { transactions: @address } %></li>
     <li id="two"><%= @contract.code %></li>
     <li id="three"><%= @contract.abi %></li>
-    <li id="four">Содержимое 4-й вкладки</li>
+    <li id="four">Contract</li>
   </ul>
   </div>
 <% else %>
