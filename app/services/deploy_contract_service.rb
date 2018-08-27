@@ -18,6 +18,8 @@ class DeployContractService
       ActiveRecord::Base.transaction do
         @contract.deploy_and_wait(wetoken.address, referral.ethereum_wallet.address, referrer_address)
         referral.update(referrer_id: profile_id, contract_address: @contract.address, root: false)
+        contract_code = File.open("config/contracts/referral.sol", "r")
+        Contract.create(name: "referral", address: @contract.address, abi: Settings.referral_abi, code: contract_code.read)
       end
     end
 

@@ -1,6 +1,28 @@
 <div class="container">
-  Address: <%= params[:id] %><br>
+  <% if @contract %>
+    Contract address: <%= params[:id] %><br>
+
+  <% else %>
+    Address: <%= params[:id] %>
+  <% end %>
   Balance: <%= @eth_balance %> ETH<br>
   Token balance: <%= @wt_balance %> WT<br>
 </div>
-<%= render partial: 'transactions/index', locals: { transactions: @address } %>
+<% if @contract %>
+  <ul class="tabs nav navbar-nav">
+    <li><a href="#one">Transactions</a></li>
+    <li><a href="#two">Code</a></li>
+    <li><a href="#three">ABI</a></li>
+    <li><a href="#four">Read contract</a></li>
+  </ul>
+  <div class="tabs-content">
+  <ul>
+    <li id="one"><%= render partial: 'transactions/index', locals: { transactions: @address } %></li>
+    <li id="two"><%= @contract.code %></li>
+    <li id="three"><%= @contract.abi %></li>
+    <li id="four">Содержимое 4-й вкладки</li>
+  </ul>
+  </div>
+<% else %>
+  <%= render partial: 'transactions/index', locals: { transactions: @address } %>
+<% end %>

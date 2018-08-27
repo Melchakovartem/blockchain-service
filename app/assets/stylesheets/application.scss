@@ -87,3 +87,18 @@ p {
   text-decoration: none;
 }
 
+.tabs-content {
+    width:1150px;
+    height:300px;
+    overflow:hidden;
+}
+.tabs-content ul {
+    list-style: none;
+    height: 320px;
+    overflow: scroll;
+    overflow-y: hidden;
+}
+.tabs-content ul li {
+    width:1150px;
+    height:300px;
+}

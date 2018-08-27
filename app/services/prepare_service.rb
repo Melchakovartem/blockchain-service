@@ -7,7 +7,8 @@ class PrepareService
 
         wetoken =  client.create_contract("config/contracts/wetoken.sol", "wetoken", 7)
         wetoken.deploy_and_wait(Settings.owner)
-        Contract.create(name: "wetoken", address: wetoken.address, abi: Settings.token_abi)
+        contract_code = File.open("config/contracts/wetoken.sol", "r")
+        Contract.create(name: "wetoken", address: wetoken.address, abi: Settings.token_abi, code: contract_code.read)
 
         deal = client.create_contract("config/contracts/deal.sol", "deal", 0)
         deal.deploy_and_wait(wetoken.address, Settings.owner, Settings.wwf)

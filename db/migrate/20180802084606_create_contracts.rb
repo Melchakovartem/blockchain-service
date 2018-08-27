@@ -4,6 +4,7 @@ class CreateContracts < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :address
       t.text :abi
+      t.text :code
 
       t.timestamps
     end
