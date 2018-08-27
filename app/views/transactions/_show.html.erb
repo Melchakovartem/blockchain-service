@@ -10,10 +10,8 @@
   Gas: <%= transaction.t_gas.to_f %> Gwei<br>
   Value: <%= transaction.t_value.to_f/10**18 %><br>
   Gas price: <%= transaction.t_gasPrice.to_f/10**9 %> Gwei<br>
-  Hash: <%= transaction.t_hash %><br>
-  <div class="container">
-    Input: <%= transaction.t_input %><br>
-  </div>
+  Hash: <%= transaction.t_hash %>
+ <div class="input"> Input: <%= transaction.t_input %></div>
   Nonce: <%= transaction.t_nonce %><br>
   Transaction index: <%= transaction.t_transactionIndex %>
 </div>
