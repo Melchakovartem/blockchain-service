@@ -10,11 +10,11 @@
     <% transactions.each do |t| %>
     <tr>
       <td><%= link_to t.t_hash[0..15] + "...", transaction_path(t.t_hash) %> </td>
-      <td><%= t.t_from %> </td>
+      <td><%= link_to t.t_from, address_path(t.t_from) %> </td>
       <% if t.t_to.nil? %>
         <td>Contract creation</td>
       <% else %>
-        <%= t.t_to %>
+        <td><%= t.t_to %></td>
       <% end %>
       <td><%= t.t_value.to_f/10**18 %> </td>
      </tr>
