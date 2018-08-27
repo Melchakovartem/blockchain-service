@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180820084819) do
     t.text     "t_to"
     t.text     "t_transactionIndex"
     t.text     "t_value"
+    t.text     "t_contract_address"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["t_from"], name: "index_transactions_on_t_from"

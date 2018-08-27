@@ -12,6 +12,7 @@ class CreateTransactions < ActiveRecord::Migration[5.0]
       t.text :t_to
       t.text :t_transactionIndex
       t.text :t_value
+      t.text :t_contract_address
 
       t.timestamps
     end

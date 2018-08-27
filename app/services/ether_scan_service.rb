@@ -3,13 +3,13 @@ class EtherScanService
 
 
     def call
-      client = EthereumClient.new(Settings.http_path)
+      @client = EthereumClient.new(Settings.http_path)
       @number = Block.last ? Block.last.b_number.to_i : 0
 
       while @number > -1 do
 
-        hex_number = client.int_to_hex(@number)
-        block = client.eth_get_block_by_number(hex_number, nil)["result"]
+        hex_number = @client.int_to_hex(@number)
+        block = @client.eth_get_block_by_number(hex_number, nil)["result"]
 
         if block.nil?
           sleep(5)
@@ -18,7 +18,7 @@ class EtherScanService
           block_record = create_block(block)
 
           block["transactions"].each do |tr_hash|
-            tr = client.eth_get_transaction_by_hash(tr_hash)["result"]
+            tr = @client.eth_get_transaction_by_hash(tr_hash)["result"]
             create_transaction(tr)
           end
           @number += 1
@@ -44,7 +44,11 @@ class EtherScanService
       Transaction.create(t_hash: tr["hash"], t_nonce: to_dec(tr["nonce"]), t_blockHash: tr["blockHash"], 
                          t_blockNumber: @number, t_transactionIndex: tr["transactionIndex"], t_from: tr["from"], 
                          t_to: tr["to"], t_value: to_dec(tr["value"]), t_gas: to_dec(tr["gas"]), 
-                         t_gasPrice: to_dec(tr["gasPrice"]), t_input: tr["input"])
+                         t_gasPrice: to_dec(tr["gasPrice"]), t_input: tr["input"], t_contract_address: get_contract_address(tr["hash"]))
+    end
+
+    def get_contract_address(hash)
+      @client.eth_get_transaction_receipt(hash)["result"]["contractAddress"]
     end
   end
 end

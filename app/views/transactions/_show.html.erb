@@ -2,8 +2,8 @@
   Block hash: <%= transaction.t_blockHash %><br>
   Block number: <%=link_to transaction.t_blockNumber, block_path(transaction.t_blockNumber) %><br>
   From: <%=link_to transaction.t_from, address_path(transaction.t_from) %><br>
-  <% if transaction.t_to.nil? %>
-    To: Contract creation <br>
+  <% if transaction.t_to == "0x0" %>
+    To: [ Contract <%=link_to transaction.t_contract_address, address_path(transaction.t_contract_address) %> Created ] <br>
   <% else %>
     To: <%= link_to transaction.t_to, address_path(transaction.t_to) %><br>
   <% end %>

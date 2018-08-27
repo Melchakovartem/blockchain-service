@@ -11,7 +11,7 @@
     <tr>
       <td><%= link_to t.t_hash[0..15] + "...", transaction_path(t.t_hash) %> </td>
       <td><%= link_to t.t_from, address_path(t.t_from) %> </td>
-      <% if t.t_to.nil? %>
+      <% if t.t_to == "0x0" %>
         <td>Contract creation</td>
       <% else %>
         <td><%= link_to t.t_to, address_path(t.t_to) %></td>
