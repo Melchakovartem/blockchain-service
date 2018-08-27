@@ -14,7 +14,7 @@
       <% if t.t_to.nil? %>
         <td>Contract creation</td>
       <% else %>
-        <%= link_to t.t_to, address_path(t.t_to) %>
+        <%= t.t_to %>
       <% end %>
       <td><%= t.t_value.to_f/10**18 %> </td>
      </tr>
