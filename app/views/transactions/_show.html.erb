@@ -5,7 +5,7 @@
   <% if t.t_to.nil? %>
     To: Contract creation <br>
   <% else %>
-    To: <%= link_to t.t_to, address_path(t.t_to) %><br>
+    To: <%= link_to transaction.t_to, address_path(transaction.t_to) %><br>
   <% end %>
   Gas: <%= transaction.t_gas.to_f %> Gwei<br>
   Value: <%= transaction.t_value.to_f/10**18 %><br>
