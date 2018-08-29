@@ -1,0 +1,13 @@
+  <h2>Contracts</h2>         
+  <table class="table table-striped">
+    <tr>
+     <th>Name</th>
+     <th>Address</th>
+    </tr>
+    <% @contracts.each do |c| %>
+    <tr>
+      
+      <td><%= c.name %> </td>
+      <td><%= link_to c.address, address_path(c.address) %></td>
+    <% end %>
+</table>

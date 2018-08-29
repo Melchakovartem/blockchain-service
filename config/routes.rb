@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :transactions, only: :show
   resources :addresses, only: :show
   resources :search, only: :index
+  resources :contracts, only: :index
 
   get '/transactions/', to: 'transactions#all'
 end
