@@ -1,13 +1,15 @@
-  <h2>Contracts</h2>         
+  <h2>Referral contracts</h2>         
   <table class="table table-striped">
     <tr>
-     <th>Name</th>
-     <th>Address</th>
+     <th>Contract address</th>
+     <th>Wallet of hotspot owner</th>
+     <th>Address of referrer</th>
     </tr>
-    <% @contracts.each do |c| %>
-    <tr>
-      
-      <td><%= c.name %> </td>
-      <td><%= link_to c.address, address_path(c.address) %></td>
+    <% @owners.each do |o| %>
+    <tr> 
+      <td><%= link_to o.contract_address, address_path(o.contract_address) %> </td>
+      <td><%= link_to o.ethereum_wallet.address, address_path(o.ethereum_wallet.address) %></td>
+      <td><%= link_to Owner.find_by_profile_id(o.referrer_id).ethereum_wallet.address, address_path(Owner.find_by_profile_id(o.referrer_id).ethereum_wallet.address) %></td>
+    </tr>
     <% end %>
 </table>

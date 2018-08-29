@@ -24,6 +24,8 @@
         <ul class="nav navbar-nav">
           <li><%= link_to "Blocks", blocks_path %></li>
           <li><%= link_to "Transactions", transactions_path %></li>
+          <li><%= link_to "Wetoken", contracts_wetoken_path %></li>
+          <li><%= link_to "Deal", contracts_deal_path %></li>
           <li><%= link_to "Referral contracts", contracts_referral_contracts_path %></li>
         </ul>
         <%= form_tag("/search", method: "get", class: "navbar-form navbar-right") do %>

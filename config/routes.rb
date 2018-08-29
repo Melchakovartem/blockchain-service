@@ -39,4 +39,6 @@ Rails.application.routes.draw do
 
   get '/transactions/', to: 'transactions#all'
   get '/contracts/referral_contracts', to: 'contracts#referral_contracts'
+  get '/contracts/wetoken', to: 'contracts#wetoken'
+  get '/contracts/deal', to: 'contracts#deal'
 end
