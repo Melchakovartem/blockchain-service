@@ -86,15 +86,235 @@ p {
   color: #fff;
   text-decoration: none;
 }
+.tabs {
+      display: block;
+      position: relative;
+      text-align: left;
+      margin: 0;
+      white-space: nowrap;
+    }
 
-.tabs-content {
-    width:1150px;
-    overflow:hidden;
-}
-.tabs-content ul {
-    list-style: none;
-    height: 320px;
-    overflow: scroll;
-    overflow-y: hidden;
-}
+    .tabs::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      top: 25px;
+      left: 0;
+      z-index: 1;
+    }
+
+    .tabs > .tabTitle {
+      display: inline-block;
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      position: relative;
+/*
+      margin: 0 -13px;
+      padding: 0 13px;
+*/
+      margin: 0 -26px 0 0;
+      padding: 0 13px;
+      cursor: pointer;
+    }
+
+    .tabs > .tabTitle span {
+      vertical-align: top;
+      line-height: inherit;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .tabs > .tabTitle > span {
+      line-height: 24px;
+      height: 24px;
+      position: relative;
+      margin: 0 8px;
+      padding: 0 13px;
+      border: solid #AAAAAA;
+      border-width: 1px 0 1px 0;
+      background-color: #ECECEC;
+      background-image: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
+      box-shadow: inset 0 1px 0 #FFFFFF;
+      font-size: 10px;
+      z-index: 0;
+    }
+
+    .tabs > .tabTitle > span > span > span {
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 1px #FFFFFF;
+      text-transform: uppercase;
+    }
+
+    .tabs > .tabTitle:hover > span,
+    .tabs > .tabTitle:hover > span::before,
+    .tabs > .tabTitle:hover > span::after {
+      background-color: #FCFCFC;
+      background-image: linear-gradient(to bottom, #FCFCFC 50%, #E1E1E1 100%);
+    }
+
+    .tabs > input:checked + .tabTitle > span {
+      background: #FFFFFF;
+      color: #000000;
+      z-index: 2;
+      border-bottom-color: #FFFFFF;
+    }
+    .tabs > .tabTitle > span {
+      color: #555555;
+      text-decoration: none;
+    }
+
+    .tabs > .tabTitle > span::before,
+    .tabs > .tabTitle > span::after {
+      position: absolute;
+      bottom: -1px;
+      width: 15px;
+      height: 24px;
+      content: "";
+      border: 1px solid #AAAAAA;
+      background: linear-gradient(to bottom, #ECECEC 50%, #D1D1D1 100%);
+      z-index: 3;
+    }
+
+    .tabs > .tabTitle > span::before {
+      left: -10px;
+      border-right: none;
+      transform: skew(-20deg);
+      box-shadow: -2px 0 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 #FFFFFF;
+    }
+
+    .tabs > .tabTitle > span::after {
+      right: -10px;
+      border-left: none;
+      transform: skew(20deg);
+      box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1), inset 0 1px 0 #FFFFFF;
+    }
+
+    .tabs > input:checked + .tabTitle {
+      cursor: text;
+      pointer-events: none;
+    }
+
+    .tabs > input:checked + .tabTitle > * {
+      pointer-events: auto;
+    }
+
+    .tabs > input:checked + .tabTitle > span::before,
+    .tabs > input:checked + .tabTitle > span::after {
+      background: #FFFFFF;
+      border-bottom-color: #FFFFFF;
+    }
+
+    /*
+    .tabs > .tabContent {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 24px;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      text-align: left;
+      padding: 8px 0 0 0;
+      white-space: normal;
+    }
+    */
+
+    .tabs > .tabContent {
+      display: none;
+      position: relative;
+      float: left;
+      z-index: 10;
+      text-align: left;
+      white-space: normal;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.2em 0 0 0;
+    }
+
+    .tabs > input:checked + .tabTitle + .tabContent {
+      display: block;
+    }
+
+    .tabs > input {
+      display: none;
+    }
+
+    /* tab round upper corners */
+    .tabs.tabRoundShape1 > .tabTitle > span::before,
+    .tabs.tabRoundShape2 > .tabTitle > span::before {
+      border-top-left-radius: 6px;
+    }
+
+    .tabs.tabRoundShape1 > .tabTitle > span::after,
+    .tabs.tabRoundShape2 > .tabTitle > span::after {
+      border-top-right-radius: 6px;
+    }
+
+    /* tab round upper and down corners */
+    .tabs.tabRoundShape2 > .tabTitle > span > span::before,
+    .tabs.tabRoundShape2 > .tabTitle > span > span::after {
+      position: absolute;
+      bottom: -1px;
+      width: 6px;
+      height: 6px;
+      content: " ";
+      border: 1px solid #AAAAAA;
+      z-index: 4;
+    }
+    .tabs.tabRoundShape2 > .tabTitle > span > span::before {
+      left: -19px;
+      border-bottom-right-radius: 6px;
+      border-width: 0 1px 1px 0;
+      box-shadow: 2px 2px 0 #D1D1D1;
+      transform: skew(-20deg);
+    }
+    .tabs.tabRoundShape2 > .tabTitle > span > span::after {
+      right: -19px;
+      border-bottom-left-radius: 6px;
+      border-width: 0 0 1px 1px;
+      box-shadow: -2px 2px 0 #D1D1D1;
+      transform: skew(20deg);
+    }
+
+    .tabs.tabRoundShape2 > input:checked + .tabTitle > span > span::before {
+      box-shadow: 2px 2px 0 #FFFFFF;
+    }
+    .tabs.tabRoundShape2 > input:checked + .tabTitle > span > span::after {
+      box-shadow: -2px 2px 0 #FFFFFF;
+    }
+
+    .tabs.tabRoundShape2 > .tabTitle:hover > span > span::after {
+      box-shadow: -2px 2px 0 #E1E1E1;
+    }
+
+    .tabs.tabRoundShape2 > .tabTitle:hover > span > span::before {
+      box-shadow: 2px 2px 0 #E1E1E1;
+    }
+
+    /* Limit tab width */
+    .tabs.tabLimitWidth > .tabTitle > span > span > span,
+    .tabs.tabLimitWidthMove > .tabTitle > span > span > span {
+      width: 5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tabs.tabLimitWidthMove > input:checked + .tabTitle > span > span > span {
+      width: auto;
+      overflow: visible;
+    }
+
+    .tabs.tabLimitWidthMoveSmooth > .tabTitle > span > span > span {
+      width: auto;
+      max-width: 5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: max-width 0.2s ease;
+    }
+    .tabs.tabLimitWidthMoveSmooth > input:checked + .tabTitle > span > span > span {
+      width: auto;
+      overflow: hidden;
+      max-width: 15em;      
+    }
 

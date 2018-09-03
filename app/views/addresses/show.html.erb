@@ -9,19 +9,29 @@
   Token balance: <%= @wt_balance %> WT<br>
 </div>
 <% if @contract %>
-  <ul class="tabs nav navbar-nav">
-    <li><a href="#one">Transactions</a></li>
-    <li><a href="#two">Code</a></li>
-    <li><a href="#three">ABI</a></li>
-    <li><a href="#four">Read contract</a></li>
-  </ul>
-  <div class="tabs-content">
-  <ul>
-    <li id="one"><%= render partial: 'transactions/index', locals: { transactions: @address } %></li>
-    <li id="two"><%= @contract.code %></li>
-    <li id="three"><%= @contract.abi %></li>
-    <li id="four">Contract</li>
-  </ul>
+  <div class="tabs" style="max-width: 30em;">
+    <input type="radio" name="tabs" id="tab-1" checked="checked" />
+    <label for="tab-1" class="tabTitle" title="Transactions"><span><span><span>Transactions</span></span></span></label>
+    <div class="tabContent">
+      <%= render partial: 'transactions/index', locals: { transactions: @address } %>
+    </div>
+
+    <input type="radio" name="tabs" id="tab-2" />
+    <label for="tab-2" class="tabTitle" title="Code"><span><span><span>Code</span></span></span></label>
+    <div class="tabContent">
+      <%= @contract.code %>
+    </div>
+
+    <input type="radio" name="tabs" id="tab-3" />
+    <label for="tab-3" class="tabTitle" title="ABI"><span><span><span>ABI</span></span></span></label>
+    <div class="tabContent">
+      <%= @contract.abi %>
+    </div>
+    <input type="radio" name="tabs" id="tab-4" />
+    <label for="tab-4" class="tabTitle" title="Read contract"><span><span><span>Read contract</span></span></span></label>
+    <div class="tabContent">
+      Contract
+    </div>
   </div>
 <% else %>
   <%= render partial: 'transactions/index', locals: { transactions: @address } %>
