@@ -10,7 +10,7 @@ class AddressService
 
       wetoken = Contract.find_by_name("wetoken")
       contract = client.set_contract(wetoken.name, wetoken.address, wetoken.abi)
-      wt_balance = contract.call.balance_of(params).to_f / 10**18
+      wt_balance = contract.call.balance_of(params)
       return address, eth_balance, wt_balance, contract_db
     end
   end
