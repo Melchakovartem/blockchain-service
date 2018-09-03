@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180820084819) do
+ActiveRecord::Schema.define(version: 20180903111130) do
 
   create_table "advertisers", force: :cascade do |t|
     t.integer  "profile_id"
@@ -75,6 +75,15 @@ ActiveRecord::Schema.define(version: 20180820084819) do
     t.datetime "updated_at",       null: false
     t.index ["profile_id"], name: "index_owners_on_profile_id"
     t.index ["referrer_id"], name: "index_owners_on_referrer_id"
+  end
+
+  create_table "token_transfers", force: :cascade do |t|
+    t.string   "from"
+    t.string   "to"
+    t.string   "amount"
+    t.string   "tr_hash"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transactions", force: :cascade do |t|

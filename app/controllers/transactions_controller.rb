@@ -1,6 +1,7 @@
 class TransactionsController < ApplicationController
   def show
   	@transaction = Transaction.find_by_t_hash!(params[:id])
+    @transfer = TokenTransfer.find_by_tr_hash(params[:id])
   end
 
   def index

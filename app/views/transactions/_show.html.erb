@@ -10,6 +10,16 @@
   Gas: <%= transaction.t_gas.to_f %> Gwei<br>
   Value: <%= transaction.t_value.to_f/10**18 %><br>
   Gas price: <%= transaction.t_gasPrice.to_f/10**9 %> Gwei<br>
+  <% if @transfer %>
+    <table>
+      <tr>
+        <td class="col-md-1">Token Transfered:</td>
+        <td class="col-md-1">from: <%= link_to @transfer.from, address_path(@transfer.from) %> </td>
+        <td class="col-md-1">to: <%= link_to @transfer.to, address_path(@transfer.to) %> </td>
+        <td class="col-md-1">amount: <%= @transfer.amount %> </td>
+      </tr>
+    </table>
+  <% end %>
   Hash: <%= transaction.t_hash %>
  <div class="input"> Input: <%= transaction.t_input %></div>
   Nonce: <%= transaction.t_nonce %><br>

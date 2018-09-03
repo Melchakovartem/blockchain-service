@@ -1,0 +1,2 @@
+class TokenTransfer < ApplicationRecord
+end

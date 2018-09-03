@@ -20,6 +20,7 @@ class EtherScanService
           block["transactions"].each do |tr_hash|
             tr = @client.eth_get_transaction_by_hash(tr_hash)["result"]
             create_transaction(tr)
+            create_token_transfer(tr["input"], tr["from"], tr["hash"])
           end
           @number += 1
         end
@@ -49,6 +50,14 @@ class EtherScanService
 
     def get_contract_address(hash)
       @client.eth_get_transaction_receipt(hash)["result"]["contractAddress"]
+    end
+
+    def create_token_transfer(input, from, tr_hash)
+      method = input[2..9]
+      return if method != "a9059cbb"
+      to = "0x" + input[34..73]
+      amount = input[74..138].to_i(16).to_s(10)
+      TokenTransfer.create(from: from, to: to, amount: amount, tr_hash: tr_hash)     
     end
   end
 end

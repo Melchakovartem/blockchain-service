@@ -1,0 +1,17 @@
+<div class="container">
+  Contract address: <%= @contract.address %><br>
+</div>
+  <ul class="tabs nav navbar-nav">
+    <li><a href="#one">Token transfers</a></li>
+    <li><a href="#two">Code</a></li>
+    <li><a href="#three">ABI</a></li>
+    <li><a href="#four">Read contract</a></li>
+  </ul>
+  <div class="tabs-content">
+  <ul>
+    <li id="one"><%= render partial: 'transfers', locals: { transfers: @transfers } %></li>
+    <li id="two"><%= @contract.code %></li>
+    <li id="three"><%= @contract.abi %></li>
+    <li id="four">Contract</li>
+  </ul>
+</div>

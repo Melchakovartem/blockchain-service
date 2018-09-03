@@ -5,8 +5,8 @@ class ContractsController < ApplicationController
   end
 
   def wetoken
-  	contract = Contract.find_by_name("wetoken")
-  	redirect_to address_url(contract.address)
+  	@contract = Contract.find_by_name("wetoken")
+    @transfers = TokenTransfer.all
   end
 
   def deal
