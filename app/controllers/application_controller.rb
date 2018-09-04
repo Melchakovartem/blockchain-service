@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
   respond_to :json
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found

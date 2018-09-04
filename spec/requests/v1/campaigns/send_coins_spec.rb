@@ -35,6 +35,7 @@ RSpec.describe "Send coins" do
     end
 
     it "returns status :no_content" do
+      pp params: { token_distribution:  token_amount_hash }
       pp v1_campaign_send_coins_path(campaign_id), params: { token_distribution:  token_amount_hash }
       expect(response).to have_http_status(:no_content)
     end
