@@ -1,4 +1,5 @@
 class ContractsController < ApplicationController
+  
   def referral_contracts
   	referral_contract_addresses = Contract.where(name: "referral").pluck(:address)
   	@owners = Owner.where(contract_address: referral_contract_addresses)
